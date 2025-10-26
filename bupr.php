@@ -12,6 +12,5 @@
         <p>Nie masz uprawnień do tej strony.</p><br>
         <a href="index.php"><button class="minwyb">Powrót do strony głównej</button></a><br>
     </div>
-
 </body>
 </html>
