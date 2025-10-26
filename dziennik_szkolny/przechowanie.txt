@@ -1,0 +1,55 @@
+onsubmit="return false;"
+
+<tr>
+            <td><?= $row['id']; ?></td>
+            <td><?= $row['nauczyciel_id']; ?></td>
+            <td><?= $row['ocena']; ?></td>
+            <td><?= $row['waga']; ?></td>
+            <td><?= $row['komentarz']; ?></td>
+            <td><?= $row['data']; ?></td>
+            <td><?= $row['przedmiot']; ?></td>
+            <td>
+                <a href="edytuj_ocene.php?id=<?= $row['id']; ?>">Edytuj</a> |
+                <a href="usun_ocene.php?id=<?= $row['id']; ?>">Usuń</a>
+            </td>
+        </tr>
+
+
+sql do obecności:
+SELECT DISTINCT data FROM obecnosci WHERE data BETWEEN '2025-01-28' AND '2025-07-30';
+SELECT COUNT(id) AS 'licznik' FROM obecnosci WHERE data BETWEEN '2025-01-28' AND '2025-07-30' AND uczen_id=4;
+SELECT `data` FROM obecnosci WHERE uczen_id=4 AND data BETWEEN '2025-01-28' AND '2025-07-30';
+
+if(isset($_POST['klasa']) && isset($_POST['dataOD']) && isset($_POST['dataDO']) && isset($_POST['wyb']))
+       {
+        $sql = "SELECT id AS 'idu', imie, nazwisko FROM uczniowie WHERE klasa = '".$_POST['klasa']."';";
+        $result = $conn->query($sql);
+        echo '<tr><th>ID</th><th>Imię</th><th>Nazwisko</th><th>  </th></tr>';
+        $sqlD = "SELECT DISTINCT data FROM obecnosci WHERE data BETWEEN '".$_POST['dataOD']."' AND '".$_POST['dataDO']."';";
+        
+        
+        
+        while($row = $result->fetch_assoc())
+        {
+            $idu = $row['idu'];
+            echo '<tr><td>'.$row['idu'].'</td><td>'.$row['imie'].'</td><td>'.$row['nazwisko'].'</td><td>';
+            $sql1 = "SELECT nauczyciele.imie AS 'imieN', nauczyciele.nazwisko AS 'nazwN', obecnosci.id, obecnosci.data, obecnosci.godzina, obecnosci.status FROM obecnosci  
+            JOIN nauczyciele ON nauczyciele.id=obecnosci.nauczyciel_id WHERE obecnosci.uczen_id = '".$idu."' AND data BETWEEN '".$_POST['dataOD']."' AND '".$_POST['dataDO']."';";
+            $result1 = $conn->query($sql1);
+            echo '<div class="obec0">';
+            while($row1 = $result1->fetch_assoc())
+            {
+                echo '<div class="obec1" onclick="openPage('.$row1['id'].')" style="background-color: ';
+                $statk = $row1['status'];
+                if($statk=="nb"){echo"#c47974";}elseif($statk=="sp"){echo "#c4ae74";}elseif($statk=="zw"){echo "#2d44b5";}
+                echo '" title="Data:'.$row1['data'].' '.$row1['godzina'].'
+Nauczyciel: '.$row1['imieN'].' '.$row1['nazwN'].'">
+            <div class="obec2">'.$row1['status'].'</div></div>';
+            }
+            echo '</div></td></tr>';
+        }
+        
+
+
+       /* $sql = "SELECT uczniowie.id, uczniowie.imie, uczniowie.nazwisko,  */
+       } 
