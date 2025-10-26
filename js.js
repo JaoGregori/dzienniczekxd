@@ -1,0 +1,1 @@
+var o= document.getElementsByName('oc')

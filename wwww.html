@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Zmiana wartości</title>
+</head>
+<body>
+    
+        <div class='number'>2.00</div>
+        <div class='number'>3.00</div>
+        <div class='number'>2.75</div>
+        <div class='number'>2.50</div>
+    
+    <script>
+        // Pobierz wszystkie elementy z klasą 'number'
+        var elements = document.getElementsByClassName('ocenka3');
+        
+        for (var i = 0; i < elements.length; i++) {
+            var value = parseFloat(elements[i].textContent);
+            if (!isNaN(value)) {
+                var integerPart = Math.floor(value);
+                var decimalPart = value - integerPart;
+                
+                if (decimalPart === 0.00) {
+                    elements[i].innerHTML = integerPart;
+                } else if (decimalPart === 0.50) {
+                    elements[i].innerHTML = integerPart + '+';
+                } else if (decimalPart === 0.75) {
+                    elements[i].innerHTML = (integerPart + 1) + '-';
+                }  else if (decimalPart === 0.00) {
+                    elements[i].innerHTML = 'nb';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
