@@ -108,7 +108,7 @@ Komentarz: '.$row52['komentarz'].'">
                 if ($sumwaga > 0)
                 {
                 echo '<div name="sr" class="sredniaw">'.round($wazonasum/$sumwaga, 2).'</div>
-                <input type="hidden" name="sred1" value="'.round($wazonasum1/$sumwaga1, 2).'">';
+                <input type="hidden" name="sred1" value="'.round($wazonasum/$sumwaga, 2).'">';
                 }else
                 {
                     echo '<div class="sredniaw">0</div>';
@@ -286,3 +286,4 @@ Komentarz: '.$row['komentarz'].'">
 <?php
 // $conn->close();
 ?>
+
