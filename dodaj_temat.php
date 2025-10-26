@@ -7,7 +7,6 @@ if (!isset($_SESSION['zalogowany']))
     exit();
 }
 include('sprupr.php');
-
 ?>
 <?php
 include('db_connect.php');
@@ -24,8 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Błąd: " . $sql . "<br>" . $conn->error;
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -37,9 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
 <?php include('header1.php')?>
+<div id="content">
 <br><h1>Dodaj nowy temat lekcji</h1>
     <form method="POST">
-        <label>Przedmiot:</label>
+        <table>
+        <tr><td>Przedmiot:</td>
+        <td>
         <?php
         echo '<select name="przedmiot" id="przedmiot" required>';
     
@@ -53,15 +53,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo '</select>';
         $conn->close();
         ?>
-        <br>
+        </td></tr>
+        
+        <tr><td>Temat:</td>
+        <td><input class="pole" type="textarea" name="temat" required></td></tr>
 
-        <label>Temat:</label>
-        <input class="pole" type="textarea" name="temat" required><br>
-
-        <label>Data:</label>
-        <input type="date" name="data" required><br>
-
-        <input type="submit" value="Dodaj temat">
+        <tr><td>Data:</td>
+        <td><input type="date" name="data" required></td></tr>
+        </table>
+        <input class="przyc1" type="submit" value="Dodaj temat">
     </form>
+</div>
 </body>
 </html>

@@ -11,7 +11,6 @@ if ($_SESSION['uzytkownik']!=1)
     header('Location: oceny_s.php');
     exit();
 }
-
 ?>
 <!DOCTYPE html>
 <html>

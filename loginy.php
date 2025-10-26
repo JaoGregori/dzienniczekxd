@@ -7,7 +7,6 @@ if (!isset($_SESSION['zalogowany']))
     exit();
 }
 include('sprupr.php');
-
 ?>
 <!DOCTYPE html>
 <html>

@@ -6,8 +6,6 @@ if (!isset($_SESSION['zalogowany']))
     header('Location: index.php');
     exit();
 }
-
-
 ?><!DOCTYPE html>
 <html>
 <head>
@@ -18,15 +16,16 @@ if (!isset($_SESSION['zalogowany']))
 </head>
 <body>
 <?php include('header1.php')?>
+<div id="content">
 <br><h1>Lista nauczycieli</h1>
-    <a href="dodaj_nauczyciela.php">Dodaj nowego nauczyciela</a>
+    
     <table>
         <tr>
             <th>ID</th>
             <th>Imię</th>
             <th>Nazwisko</th>
             <th>przedmiot</th>
-        
+            <th>Akcja</th>
         </tr>
         <?php
 // Połączenie z bazą danych
@@ -48,6 +47,9 @@ while($row = $result->fetch_assoc()){ ?>
         </tr>
         <?php } ?>
     </table>
+    <br>
+    <a href="dodaj_nauczyciela.php"><button class="przyc1">Dodaj nowego nauczyciela</button></a>
+</div>
 </body>
 </html>
 

@@ -44,9 +44,9 @@ include('db_connect.php');
         <a href="uczniowie.php"><button class="pg">Uczniowie</button></a> 
         <a href="nauczyciele.php"><button class="pg">Nauczyciele</button></a>
         <a href="oceny.php"><button class="pg">Oceny</button></a>
-        <a href="uwagi.php"><button class="pg">Uwagi</button></a>
         <a href="tematy.php"><button class="pg">Tematy lekcji</button></a>
-        <a href="plan.php"><button class="pg">Plan lekcji</button></a>
+        <a href="uwagi.php"><button class="pg" disabled></button></a>
+        <a href="plan.php"><button class="pg" disabled>Plan lekcji</button></a>
         <a href="obecnosci1.php"><button class="pg">Obecnosci</button></a>
         <a href="wersje.php"><button class="pg">Wersje dziennika</button></a>
         <a href="index.php"><button class="pg">Główna strona</button></a>

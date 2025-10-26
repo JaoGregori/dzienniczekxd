@@ -8,7 +8,6 @@ if (!isset($_SESSION['zalogowany']))
     exit();
 }
 include('sprupr.php');
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,6 +19,7 @@ include('sprupr.php');
 </head>
 <body>
 <?php include('header1.php')?>
+<div id="content">
 <br><h1>Edytuj nauczyciela</h1>
     <?php
     // Połączenie z bazą danych
@@ -36,13 +36,16 @@ include('sprupr.php');
 
     <form action="edytuj_nauczyciela.php" method="POST">
         <input type="hidden" name="id" value="<?= $row['id']; ?>">
-        <label>Imię:</label>
-        <input type="text" name="imie" value="<?= $row['imie']; ?>" required><br>
-        <label>Nazwisko:</label>
-        <input type="text" name="nazwisko" value="<?= $row['nazwisko']; ?>" required><br>
-        <label>Klasa:</label>
-        <input type="text" name="przedmiot" value="<?= $row['przedmiot']; ?>" required><br>
+        <table>
+        <tr><td>Imię:</td>
+        <td><input type="text" name="imie" value="<?= $row['imie']; ?>" required></td></tr>
+        <tr><td>Nazwisko:</td>
+        <td><input type="text" name="nazwisko" value="<?= $row['nazwisko']; ?>" required></td></tr>
+        <tr><td>Klasa:</td>
+        <td><input type="text" name="przedmiot" value="<?= $row['przedmiot']; ?>" required></td></tr>
+        </table>
         <input type="submit" class="przyc1" value="Zapisz zmiany">
+        
     </form>
 
     <?php
@@ -65,5 +68,6 @@ include('sprupr.php');
 
     $conn->close();
     ?>
+</div>
 </body>
 </html>

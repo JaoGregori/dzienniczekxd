@@ -6,7 +6,6 @@ if (!isset($_SESSION['zalogowany']))
     header('Location: index.php');
     exit();
 }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -286,4 +285,3 @@ Komentarz: '.$row['komentarz'].'">
 <?php
 // $conn->close();
 ?>
-

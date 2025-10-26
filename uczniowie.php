@@ -6,7 +6,6 @@ if (!isset($_SESSION['zalogowany']))
     header('Location: index.php');
     exit();
 }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,8 +17,9 @@ if (!isset($_SESSION['zalogowany']))
 </head>
 <body>
     <?php include('header1.php')?>
+    <div id="content">
     <br><h1>Lista uczniów</h1>
-    <a href="dodaj_ucznia.php">Dodaj nowego ucznia</a>
+    
     <table>
         <tr>
             <th>ID</th>
@@ -58,6 +58,8 @@ while($row = $result->fetch_assoc()){ ?>
         </tr>
         <?php } ?>
     </table>
+    <a href="dodaj_ucznia.php"><button class="przyc1">Dodaj nowego ucznia</button></a>
+</div>
 </body>
 </html>
 

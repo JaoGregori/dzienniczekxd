@@ -8,15 +8,14 @@ if (!isset($_SESSION['zalogowany']))
 }
 if ($_SESSION['uzytkownik']!=1)
 {
-    header('Location: obecnosci1_s.php');
-    exit();
+    $idu=$_SESSION['uzytkownik'];
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Obecności</title>
+    <title>Moje obecności</title>
     <link rel="stylesheet" href="style.css">
     <?php include('head.php'); ?>
 </head>
@@ -24,44 +23,29 @@ if ($_SESSION['uzytkownik']!=1)
 <body>
 <br>
 <div id="content">
-    <div class="minwyb">
-    <a class="minwyba" href="dodaj_ob.php"><button class="minwyb">Dodaj obecnosci</button></a>
-    </div>
+    
 <div class="BarDOS">
     <form method="POST">
-    Wybierz klasę: 
-    <select name="klasa">
-        <?php 
-        include('db_connect.php');
-        $sql = "SELECT klasa FROM uczniowie;";
-        $result = $conn->query($sql);
-        $ostatnialk = NULL;
-            while($row = $result->fetch_assoc()){
-                if($row['klasa'] !== $ostatnialk) {
-                echo '<option  value="'.$row['klasa'].'">'.$row['klasa'].'</option>';
-                $ostatnialk = $row['klasa'];
-            }} 
-        ?>
-    </select>
-
     Obecności od:
-    <input type="date" name="dataOD" required>
+    <input type="date" name="dataOD">
     Obecności do:
-    <input type="date" name="dataDO" required>
-
-    <input type="submit" name="wyb" value="Wybierz">
+    <input type="date" name="dataDO">
+    <input type="submit" class="przyc1" name="wyb" value="Wybierz">
+                   Lub Wybierz wszystkie daty:
+    <input type="submit" class="przyc1" name="wsjo" value="Wszystkie daty">
     </form>
     </div>
     <br>
-    <table>
+    <div id="tabOB">
+    <table >
     <?php
-       if(isset($_POST['klasa']) && isset($_POST['dataOD']) && isset($_POST['dataDO']) && isset($_POST['wyb']))
+       if(isset($idu) && isset($_POST['wyb']) || isset($_POST['wsjo']))
        {
-            $klasa=$_POST['klasa'];
+            
             $dataOd=$_POST['dataOD'];
             $dataDo=$_POST['dataDO'];
             
-            $sql = "SELECT DISTINCT id FROM uczniowie WHERE klasa=$klasa";
+            $sql = "SELECT DISTINCT id FROM uczniowie WHERE id=$idu";
             $result = $conn->query($sql);
             $ids = [];
             while($row=$result->fetch_assoc())
@@ -69,16 +53,33 @@ if ($_SESSION['uzytkownik']!=1)
                 $ids[]= $row['id'];
             }
 
-            $wartids="'".implode("', '", $ids)."'";
-            $sql = "SELECT DISTINCT data FROM obecnosci WHERE data BETWEEN '".$dataOd."' AND '".$dataDo."' AND uczen_id IN (".$wartids.");";
+            if(isset($_POST['dataOD']) && isset($_POST['dataDO']) && isset($_POST['wyb']) )
+            {
+                $data1od = $_POST['dataOD'];
+                $data1do = $_POST['dataDO'];
+            }
+
+            if(isset($_POST['wyb']))
+            {
+            $sql = "SELECT DISTINCT data FROM obecnosci WHERE data BETWEEN '".$dataOd."' AND '".$dataDo."' AND uczen_id='".$idu."';";
             $result = $conn->query($sql);
             $daty = [];
             while($row=$result->fetch_assoc())
             {
                 $daty[]= $row['data'];
             }
+            }else
+            {
+            $sql = "SELECT DISTINCT data FROM obecnosci WHERE uczen_id=$idu;";
+            $result = $conn->query($sql);
+            $daty = [];
+            while($row=$result->fetch_assoc())
+            {
+                $daty[]= $row['data'];
+            } 
+            }
 
-            $sql = "SELECT id AS 'idu', imie, nazwisko FROM uczniowie WHERE klasa = '".$_POST['klasa']."';";
+            $sql = "SELECT id AS 'idu', imie, nazwisko FROM uczniowie WHERE id = '".$idu."';";
             $result = $conn->query($sql);
             $uczniowie = [];
             while($row=$result->fetch_assoc())
@@ -123,6 +124,7 @@ Nauczyciel: '.$row1['imieN'].' '.$row1['nazwN'].'">
        }
     ?>
 </table>
+    </div>
 </div>
 <script>
             function openPage(a) {

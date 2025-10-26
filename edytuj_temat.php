@@ -7,15 +7,9 @@ if (!isset($_SESSION['zalogowany']))
     exit();
 }
 include('sprupr.php');
-
 ?>
 <?php
 include('db_connect.php');
-
-$id = $_GET['id'];
-$sql = "SELECT * FROM tematy_lekcji WHERE id=$id";
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $przedmiot = $_POST['przedmiot'];
@@ -36,27 +30,36 @@ $conn->close();
 <!DOCTYPE html>
 <html>
 <head>
-
     <title>Edytuj temat</title>
     <?php include('head.php') ?>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <?php include('header1.php')?>
+<div id="content">
     <h1>Edytuj temat lekcji</h1>
     <form method="POST">
-        <label>Przedmiot:</label>
-        <input type="text" name="przedmiot" value="<?= $row['przedmiot']; ?>"  readonly><br>
-        <table class="unboard">
+        <?php
+        $id = $_GET['id'];
+        $sql = "SELECT * FROM tematy_lekcji WHERE id=$id";
+        $result = $conn->query($sql); 
+        while($row = $result->fetch_assoc()){
+        ?>
+        <table>
+        <tr><td>Przedmiot:</td>
+        <td><input type="text" name="przedmiot" value="<?=$row['przedmiot']?>"  readonly></td></tr>
+        
             <tr>
             <td>Temat:</td>
-            <td><textarea  name="temat" value="" rows="5" cols="40" required><?= $row['temat']; ?></textarea><br></td>
+            <td><textarea  name="temat" value="" rows="5" cols="40" required><?= $row['temat'] ?></textarea><br></td>
             </tr>
+        
+        <tr><td>Data:</td>
+        <td><input type="date" name="data" value="<?= $row['data'] ?>" required></td></tr>
         </table>
-        <label>Data:</label>
-        <input type="date" name="data" value="<?= $row['data']; ?>" required><br>
-
         <input class="przyc1" type="submit" value="Zaktualizuj temat">
     </form>
+    <?php }?>
+</div>
 </body>
 </html>

@@ -7,7 +7,6 @@ if (!isset($_SESSION['zalogowany']))
     exit();
 }
 include('sprupr.php');
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -141,7 +140,7 @@ include('sprupr.php');
             $komentarz = $komentarze[$i];
             if ($ocena !== '') {
             $sql2 = "INSERT INTO oceny (`uczen_id`, `nauczyciel_id`, `ocena`, `okres`, `typ`, `waga`, `dosredniej`, `komentarz`, `data`, `czas`, `przedmiot`, `kolor`) 
-                                VALUES ('$id', '1', '$ocena', '$okres', '$typ', '$waga', '$dosredniej', '$komentarz', CURRENT_DATE, CURRENT_TIME, '$przedmiot', '$kolor');";
+                                VALUES ('$id', '1', '$ocena', '$okres', '$typ', '$waga', $dosredniej, '$komentarz', CURRENT_DATE, CURRENT_TIME, '$przedmiot', '$kolor');";
             $conn->query($sql2);
             }else {
                 echo '<br>Nie wybrano oceny dla ucznia o id: '.$id.' Ocena nie została dodana';

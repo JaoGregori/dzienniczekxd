@@ -6,7 +6,6 @@ if (!isset($_SESSION['zalogowany']))
     header('Location: index.php');
     exit();
 }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,8 +19,9 @@ if (!isset($_SESSION['zalogowany']))
 
 <body>
 <?php include('header1.php')?>
+<div id="content">
 <br><h1>Lista tematów lekcji</h1>
-    <a href="dodaj_temat.php">Dodaj nowy temat</a>
+    
 
     <table>
         <tr>
@@ -55,6 +55,8 @@ if (!isset($_SESSION['zalogowany']))
         <?php } ?>
 
     </table>
+    <a href="dodaj_temat.php"><button class="przyc1">Dodaj nowy temat</button></a>
+</div>
 </body>
 
 </html>

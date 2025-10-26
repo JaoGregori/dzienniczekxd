@@ -4,8 +4,8 @@ include('db_connect.php');
 echo '
     <div id="header">
     <div id="imgh">
-    <img id="ih" src="icon.png" alt="LOGO"><br>
-    Wersja dziennika 0.6.0
+    <img id="ih" src="icon.png" alt="LOGO">
+    Wersja dziennika <br> <center>0.6.2</center>
     </div>
     <div id="prz">
         <a href="index.php"><button class="ph">Główna strona</button></a>

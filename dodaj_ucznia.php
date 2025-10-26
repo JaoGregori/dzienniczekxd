@@ -55,9 +55,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         <tr><td>Telefon: </td><td><input type="text" name="telef" required></td></tr>
         <tr><td>Mail: </td><td><input type="text" name="mail" required></td></tr>
         </table>
-        <input type="submit" value="Dodaj">
-    </form>
-    <a href="uczniowie.php">Powrót do listy uczniów</a>
+        <input class="przyc1" type="submit" value="Dodaj">
+    </form><br>
+    <a href="uczniowie.php"><button class="przyc1">Powrót do listy uczniów</button></a>
 </div>
 </body>
 </html>

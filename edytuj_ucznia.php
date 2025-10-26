@@ -7,7 +7,6 @@ if (!isset($_SESSION['zalogowany']))
     exit();
 }
 include('sprupr.php');
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,6 +18,7 @@ include('sprupr.php');
 </head>
 <body>
 <?php include('header1.php')?>
+<div id="content">
 <br><h1>Edytuj Ucznia</h1>
     <?php
     // Połączenie z bazą danych
@@ -34,23 +34,26 @@ include('sprupr.php');
     ?>
 
     <form action="edytuj_ucznia.php" method="POST">
+
         <input type="hidden" name="id" value="<?= $row['id']; ?>">
-        <label>Imię:</label>
-        <input type="text" name="imie" value="<?= $row['imie']; ?>" required><br>
-        <label>Nazwisko:</label>
-        <input type="text" name="nazwisko" value="<?= $row['nazwisko']; ?>" required><br>
-        <label>Klasa:</label>
-        <input type="text" name="klasa" value="<?= $row['klasa']; ?>" required><br>
-        <label>Data urodzin:</label>
-        <input type="date" name="data_urodzin" value="<?= $row['data_urodzin']; ?>" required><br>
-        <label>Miejscowosc:</label>
-        <input type="text" name="miejscowosc" value="<?= $row['miejscowosc']; ?>" required><br>
-        <label>Ulica:</label>
-        <input type="text" name="ulica" value="<?= $row['ulica']; ?>" required><br>
-        <label>Telefon:</label>
-        <input type="telef" name="telef" value="<?= $row['telef']; ?>" required><br>
-        <label>Mail:</label>
-        <input type="text" name="mail" value="<?= $row['mail']; ?>" required><br>
+        <table>
+        <tr><td>Imię:</td>
+        <td><input type="text" name="imie" value="<?= $row['imie']; ?>" required></td></tr>
+        <tr><td>Nazwisko:</td>
+        <td><input type="text" name="nazwisko" value="<?= $row['nazwisko']; ?>" required></td></tr>
+        <tr><td>Klasa:</td>
+        <td><input type="text" name="klasa" value="<?= $row['klasa']; ?>" required></td></tr>
+        <tr><td>Data urodzin:</td>
+        <td><input type="date" name="data_urodzin" value="<?= $row['data_urodzin']; ?>" required></td></tr>
+        <tr><td>Miejscowosc:</td>
+        <td><input type="text" name="miejscowosc" value="<?= $row['miejscowosc']; ?>" required></td></tr>
+        <tr><td>Ulica:</td>
+        <td><input type="text" name="ulica" value="<?= $row['ulica']; ?>" required></td></tr>
+        <tr><td>Telefon:</td>
+        <td><input type="telef" name="telef" value="<?= $row['telef']; ?>" required></td></tr>
+        <tr><td>Mail:</td>
+        <td><input type="text" name="mail" value="<?= $row['mail']; ?>" required></td></tr>
+        </table>
         <input class="przyc1" type="submit" value="Zapisz zmiany">
     </form>
 
@@ -79,5 +82,6 @@ include('sprupr.php');
 
     $conn->close();
     ?>
+</div>
 </body>
 </html>
