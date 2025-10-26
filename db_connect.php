@@ -10,7 +10,3 @@ $conn = new mysqli($host, $user, $pass, $db, $port);
 if ($conn->connect_error) {
     die("Błąd połączenia: " . $conn->connect_error);
 }
-
-?>
-
-
