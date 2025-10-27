@@ -5,7 +5,7 @@ echo '
     <div id="header">
     <div id="imgh">
     <img id="ih" src="icon.png" alt="LOGO">
-    Wersja dziennika <br> <center>0.6.2</center>
+    Wersja dziennika <br> <center>0.6.3</center>
     </div>
     <div id="prz">
         <a href="index.php"><button class="ph">Główna strona</button></a>
@@ -17,7 +17,7 @@ echo '
         <a href="uwagi.php"><button class="ph" disabled>Uwagi</button></a>
         <a href="plan.php"><button class="ph" disabled>Plan lekcji</button></a>
         <a href="wersje.php"><button class="ph">Wersje dziennika</button></a>';
-if ($_SESSION['uzytkownik'] == 1)
+if ($_SESSION['uzytkownik'] < 13)
 {
     echo '<a href="loginy.php"><button class="ph">Loginy w dzienniku</button></a>';
 }

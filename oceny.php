@@ -6,7 +6,7 @@ if (!isset($_SESSION['zalogowany']))
     header('Location: index.php');
     exit();
 }
-if ($_SESSION['uzytkownik']!=1)
+if ($_SESSION['uzytkownik'] > 13)
 {
     header('Location: oceny_s.php');
     exit();
@@ -29,7 +29,7 @@ if ($_SESSION['uzytkownik']!=1)
 <br><h1>Lista Ocen</h1>
     <div class="minwy">
 <?php
-if ($_SESSION['uzytkownik'] == 1)
+if ($_SESSION['uzytkownik'] < 13)
 {
     echo '
     <button onclick="openPage1()" class="minwyb">Dodaj nową ocenę</button>

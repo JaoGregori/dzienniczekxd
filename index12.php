@@ -52,9 +52,10 @@ include('db_connect.php');
         <a href="index.php"><button class="pg">Główna strona</button></a>
         </div>
         <div class="puste"></div><br><br>
-        
+       
     </div>
-    <div id="nl2"><img src="nl.png" id="nl" alt="Baba z bachorem uczy go ksiazeczki UwU"/></div>
+    <div id="nl2"><img src="images/nl.png" id="nl" alt="Baba z bachorem uczy go ksiazeczki UwU"/></div>
+     Już niebawem - nowa szata graficzna oraz nowe funkcje!
 </body>
 </html>
 

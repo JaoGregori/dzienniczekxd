@@ -33,7 +33,8 @@ include('db_connect.php');?>
     <li>0.5.1 Dodano kolory ocen</li>
     <li>0.6.0 Nowy interfejs dodawania obecności, ocen itp. <br>Dodano interfejs ucznia<br>System ocen i obecności ulepszony o: wyświetlanie informacji po najechaniu myszką, łatwiejsza edycja, lepszy interfejs dodawania/edytowania<br>System logowania (zabezpieczenia)<br>Poprawienie systemu dodawania i sprawdzania obecności<br>Nowa strona główna</li>
     <li>0.6.1 Wyświetlanie obecności jest teraz dokładniejsze.</li>
-    <li>0.6.2 Poprawka kodu oraz poprawa interfejsu</li> 
+    <li>0.6.2 Poprawka kodu oraz poprawa interfejsu</li>
+    <li>0.6.3 Poprawka uprawnień</li> 
     </ol>
 </div>
 </body>

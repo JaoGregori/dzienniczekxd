@@ -53,3 +53,40 @@ Nauczyciel: '.$row1['imieN'].' '.$row1['nazwN'].'">
 
        /* $sql = "SELECT uczniowie.id, uczniowie.imie, uczniowie.nazwisko,  */
        } 
+
+ALTER TABLE uczniowie DROP COLUMN haslo;
+ALTER TABLE uczniowie DROP COLUMN login;
+
+----------DO TABELI W SQL zmiana id---------------
+
+UPDATE loginy SET sz_id=sz_id+10;
+Nauczyciele sie nie zmieniają
+
+CREATE TABLE uczniowie_backup AS SELECT * FROM uczniowie;
+CREATE TABLE obecnosci_backup AS SELECT * FROM obecnosci;
+
+ALTER TABLE obecnosci
+  DROP FOREIGN KEY obecnosci_ibfk_1;
+
+ALTER TABLE obecnosci
+  ADD CONSTRAINT obecnosci_ibfk_1
+    FOREIGN KEY (uczen_id)
+    REFERENCES uczniowie(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT;  -- lub tak jak potrzebujesz
+
+ALTER TABLE oceny
+  DROP FOREIGN KEY oceny_ibfk_1;
+
+ALTER TABLE oceny
+  ADD CONSTRAINT oceny_ibfk_1
+    FOREIGN KEY (uczen_id)
+    REFERENCES uczniowie(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT;  
+
+UPDATE uczniowie
+SET id = id + 10
+ORDER BY id DESC;
+
+--------------------------------------------

@@ -26,7 +26,7 @@ if (!isset($_SESSION['zalogowany']))
         $idu = $_GET['idu'];
         $ido = $_GET['ido'];
     //}
-    if($_SESSION['uzytkownik'] != 1)
+    if($_SESSION['uzytkownik'] > 13)
     {
         $blokada = 'disabled';
     }else
@@ -147,7 +147,7 @@ if (!isset($_SESSION['zalogowany']))
     if ($kolor == "" || $kolor == "#000000") {
         $kolor = "#ffe4c4";
     }
-        if($_SESSION['uzytkownik'] == 1)
+        if($_SESSION['uzytkownik'] < 13)
         {
         $sql = "UPDATE oceny SET uczen_id='$uczen_id', nauczyciel_id='$nauczyciel_id', ocena='$ocena', waga='$waga', dosredniej=$dosredniej, okres='$okres', typ='$typ',
                 komentarz='$komentarz', `data`=CURRENT_DATE, czas=CURRENT_TIME, przedmiot='$przedmiot', kolor='$kolor' WHERE id='$id'";

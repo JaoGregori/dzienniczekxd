@@ -22,7 +22,7 @@ include('db_connect.php');?>
 <div id="content">
 <br><br><br>
 <?php 
-    if ($_SESSION['uzytkownik']==1)
+    if ($_SESSION['uzytkownik'] < 13)
     {
     echo '<form method="post">
     <br/>Uczeń:'; 

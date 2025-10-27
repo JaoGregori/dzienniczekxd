@@ -6,7 +6,7 @@ if (!isset($_SESSION['zalogowany']))
     header('Location: index.php');
     exit();
 }
-if ($_SESSION['uzytkownik']!=1)
+if ($_SESSION['uzytkownik'] > 13)
 {
     $idu=$_SESSION['uzytkownik'];
 }
