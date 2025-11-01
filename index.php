@@ -18,7 +18,7 @@ if (isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == true) {
 </head>
 <body>
     <center><h1>Witaj w dzienniku szkolnym</h1></center><br>
-    <div id="nl2"><img src="nl.png" id="nl" alt="Baba z bachorem uczy go ksiazeczki UwU"/></div><br>
+    <div id="nl2"><img src="images/nl.png" id="nl" alt="Baba z bachorem uczy go ksiazeczki UwU"/></div><br>
 
     <div id="contg">
         
@@ -41,4 +41,5 @@ if (isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == true) {
     </div>
     
 </body>
+
 </html>
