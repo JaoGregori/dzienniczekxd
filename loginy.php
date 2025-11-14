@@ -31,6 +31,7 @@ include('sprupr.php');
             <tr><td>Hasło: </td><td><input type="password" name="haslo" required><br></td></tr>
             <tr><td>id ucznia/nauczyciela: </td><td><input type="number" name="id" required><br></td></tr>
         </table>
+        <?php echo $_SERVER['DOCUMENT_ROOT'];?>
         <center><input type="submit" name="log1" class="przyc1" value="Dodaj"></center>
     </form>
     <br>
@@ -71,4 +72,5 @@ include('sprupr.php');
                 let popup = window.open(stro, "popupWindow", "width=600,height=600")
                 
             }
+
 </script>
