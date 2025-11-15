@@ -1,4 +1,5 @@
 <?php
+$korzen = __DIR__."/";
 session_start();
 
 if (!isset($_SESSION['zalogowany']))
@@ -15,6 +16,7 @@ include('db_connect.php');
     <title>Dziennik Szkolny</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="icon.png">
     <?php include('head.php') ?>
 </head>
 <body>
@@ -41,13 +43,13 @@ include('db_connect.php');
     <div id="contg">
         <div class="puste"></div>
         <div id="gwyb">
-        <a href="uczniowie.php"><button class="pg">Uczniowie</button></a> 
-        <a href="nauczyciele.php"><button class="pg">Nauczyciele</button></a>
-        <a href="oceny.php"><button class="pg">Oceny</button></a>
-        <a href="tematy.php"><button class="pg">Tematy lekcji</button></a>
+        <a href="uczniowie/uczniowie.php"><button class="pg">Uczniowie</button></a> 
+        <a href="nauczyciele/nauczyciele.php"><button class="pg">Nauczyciele</button></a>
+        <a href="oceny/oceny.php"><button class="pg">Oceny</button></a>
+        <a href="tematy/tematy.php"><button class="pg">Tematy lekcji</button></a>
         <a href="uwagi.php"><button class="pg" disabled></button></a>
         <a href="plan.php"><button class="pg" disabled>Plan lekcji</button></a>
-        <a href="obecnosci1.php"><button class="pg">Obecnosci</button></a>
+        <a href="obecnosci/obecnosci1.php"><button class="pg">Obecnosci</button></a>
         <a href="wersje.php"><button class="pg">Wersje dziennika</button></a>
         <a href="index.php"><button class="pg">Główna strona</button></a>
         </div>
@@ -55,6 +57,8 @@ include('db_connect.php');
        
     </div>
     <div id="nl2"><img src="images/nl.png" id="nl" alt="Baba z bachorem uczy go ksiazeczki UwU"/></div>
+    Wersja - <?php include('wersja_ob.php'); echo $wersjad;?>
+    <br>
      Już niebawem - nowa szata graficzna oraz nowe funkcje!
 </body>
 </html>

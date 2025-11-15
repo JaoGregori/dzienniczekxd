@@ -1,25 +1,26 @@
 <?php
-include('db_connect.php');
+include($korzen.'deep.php');
+include($deep.'db_connect.php');
+include($deep.'wersja_ob.php');
 
 echo '
     <div id="header">
     <div id="imgh">
-    <img id="ih" src="icon.png" alt="LOGO">
-    Wersja dziennika <br> <center>0.6.3</center>
+    <img id="ih" src="'.$deep.'icon.png" alt="LOGO">
+    Wersja dziennika <br> <center>'.$wersjad.'</center>
     </div>
     <div id="prz">
-        <a href="index.php"><button class="ph">Główna strona</button></a>
-        <a href="uczniowie.php"><button class="ph">Uczniowie</button></a> 
-        <a href="nauczyciele.php"><button class="ph">Nauczyciele</button></a>
-        <a href="oceny.php"><button class="ph">Oceny</button></a>
-        <a href="obecnosci1.php"><button class="ph">Obecnosci</button></a>
-        <a href="tematy.php"><button class="ph">Tematy lekcji</button></a>
-        <a href="uwagi.php"><button class="ph" disabled>Uwagi</button></a>
+        <a href="'.$deep.'index.php"><button class="ph">Główna strona</button></a>
+        <a href="'.$deep.'uczniowie/uczniowie.php"><button class="ph">Uczniowie</button></a> 
+        <a href="'.$deep.'nauczyciele/nauczyciele.php"><button class="ph">Nauczyciele</button></a>
+        <a href="'.$deep.'oceny/oceny.php"><button class="ph">Oceny</button></a>
+        <a href="'.$deep.'obecnosci/obecnosci1.php"><button class="ph">Obecnosci</button></a>
+        <a href="'.$deep.'tematy/tematy.php"><button class="ph">Tematy lekcji</button></a>
         <a href="plan.php"><button class="ph" disabled>Plan lekcji</button></a>
-        <a href="wersje.php"><button class="ph">Wersje dziennika</button></a>';
+        <a href="'.$deep.'wersje.php"><button class="ph">Wersje dziennika</button></a>';
 if ($_SESSION['uzytkownik'] < 13)
 {
-    echo '<a href="loginy.php"><button class="ph">Loginy w dzienniku</button></a>';
+    echo '<a href="'.$deep.'loginy/loginy.php"><button class="ph">Loginy w dzienniku</button></a>';
 }
 echo '</div>
     <div id="kontr"><a href="wyloguj.php"><button class="ph">Wyloguj</button></a> <div> Zalogowany jako: ';
