@@ -1,6 +1,7 @@
 <?php
 $korzen = __DIR__."/";
-session_start();
+include($deep.'session.php');
+include('deep.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -22,50 +23,57 @@ if ($_SESSION['uzytkownik'] > 13)
     <link rel="icon" type="image/x-icon" href="../icon.png">
     <?php include('../head.php'); ?>
 </head>
-<?php include('../header1.php')?>
 <body>
-<br>
-<div id="content">
-    <div class="minwyb">
-    <a class="minwyba" href="dodaj/dodaj_ob.php"><button class="minwyb">Dodaj obecnosci</button></a>
+    <div id="top">
+        <?php include('../header1.php')?>
     </div>
-<div class="BarDOS">
-    <form method="POST">
-    Wybierz klasę: 
-    <select name="klasa">
-        <?php 
-        include('../db_connect.php');
-        $sql = "SELECT klasa FROM uczniowie;";
-        $result = $conn->query($sql);
-        $ostatnialk = NULL;
-            while($row = $result->fetch_assoc()){
-                if($row['klasa'] !== $ostatnialk) {
-                echo '<option  value="'.$row['klasa'].'">'.$row['klasa'].'</option>';
-                $ostatnialk = $row['klasa'];
-            }} 
-        ?>
-    </select>
-
-    Obecności od:
-    <input type="date" name="dataOD" required>
-    Obecności do:
-    <input type="date" name="dataDO" required>
-
-    <input type="submit" name="wyb" class="przyc1" value="Wybierz">
-    </form>
-    </div>
-    <br>
-    <table>
+    <div id="contener">
+    <div id="ContentPages">
+        <h1>Obecności</h1>
+        <div class="pageForm">
+            <form method="POST">
+                <div class="formItems">
+                Wybierz klasę: 
+                <select class="boxSmall" name="klasa">
+                    <?php 
+                    include('../db_connect.php');
+                    $sql = "SELECT DISTINCT klasa FROM uczniowie;";
+                    $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc())
+                    {
+                        echo '<option  value="'.$row['klasa'].'"';
+                        if(isset($_POST['klasa']) && $_POST['klasa'] == $row['klasa']){echo 'selected';}
+                        echo '>'.$row['klasa'].'</option>';
+                    } 
+                    ?>
+                </select>
+                </div>
+                <div class="formItems">
+                    Obecności od:
+                    <input class="box" type="date" name="dataOD" required>
+                </div>
+                <div class="formItems">
+                    Obecności do:
+                    <input class="box" type="date" name="dataDO" required>
+                </div>
+                    <input type="submit" name="wyb"  class="formButton"  value="Wybierz">
+            </form>
+            <a href="dodaj/dodaj_ob.php"><button  class="formButton" >Dodaj obecnosci</button></a>
+        </div><br>
+        
     <?php
        if(isset($_POST['klasa']) && isset($_POST['dataOD']) && isset($_POST['dataDO']) && isset($_POST['wyb']))
        {
             $klasa=$_POST['klasa'];
             $dataOd=$_POST['dataOD'];
             $dataDo=$_POST['dataDO'];
-            
             $sql = "SELECT DISTINCT id FROM uczniowie WHERE klasa=$klasa";
             $result = $conn->query($sql);
             $ids = [];
+            
+            echo '<div class="pageTable">
+            <table>';
+            
             while($row=$result->fetch_assoc())
             {
                 $ids[]= $row['id'];
@@ -122,9 +130,12 @@ Nauczyciel: '.$row1['imieN'].' '.$row1['nazwN'].'">
                 echo "</tr>";
                 
             }
+        echo '</table>
+        </div>';
        }
     ?>
-</table>
+        
+    </div>
 </div>
 <script>
             function openPage(a) {

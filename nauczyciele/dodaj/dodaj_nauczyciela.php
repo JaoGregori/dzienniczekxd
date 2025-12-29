@@ -1,7 +1,7 @@
 <?php
 $korzen = __DIR__."/";
 include('deep.php');
-session_start();
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -37,20 +37,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 </head>
 
 <body>
+<div id="top">
 <?php include($deep.'header1.php')?>
-<div id="content">
+</div>
+<div id="contener">
+<div id="ContentPages">
     <h1>Dodaj nowego nauczyciela</h1>
+    <div class="pageForm">
     <form method="post">
-        <table>
-        <tr><td>Imię:</td><td><input type="text" name="imie" required></td></tr>
-        <tr><td>Nazwisko:</td><td><input type="text" name="nazwisko" required></td></tr>
-        <tr><td>Przedmiot:</td><td><input type="text" name="przedmiot" required></td></tr>
-        </table>
-        <br>
-        <button class="przyc1" type="submit" value="Dodaj">Dodaj</button><br><br>
-    </form>
-    <a href="nauczyciele.php"><button class="przyc1" >Powrót do listy nauczycieli</button></a>
     
+        <table>
+        <tr><td>Imię:</td><td><input class="box" type="text" name="imie" required></td></tr>
+        <tr><td>Nazwisko:</td><td><input class="box" type="text" name="nazwisko" required></td></tr>
+        <tr><td>Przedmiot:</td><td><input class="box" type="text" name="przedmiot" required></td></tr>
+        </table>
+        <button class="przyc1" type="submit" value="Dodaj">Dodaj</button><br><br>
+        
+    </form>
+    </div>
+    <a href="nauczyciele.php"><button class="przyc1" >Powrót do listy nauczycieli</button></a>
+</div>   
 </div>
 </body>
 </html>

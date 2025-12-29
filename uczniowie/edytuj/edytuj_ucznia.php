@@ -1,7 +1,7 @@
 <?php
 $korzen = __DIR__."/";
 include('deep.php');
-session_start();
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -19,9 +19,12 @@ include($deep.'sprupr.php');
     <?php include($deep.'head.php') ?>
 </head>
 <body>
+<div id="top">
 <?php include($deep.'header1.php')?>
-<div id="content">
+</div>
+<div id="contener">
 <br><h1>Edytuj Ucznia</h1>
+    <div id="ContentPage">
     <?php
     // Połączenie z bazą danych
     include($deep.'db_connect.php');
@@ -34,31 +37,33 @@ include($deep.'sprupr.php');
         $row = $result->fetch_assoc();
     }
     ?>
-
+    <div class="pageForm">
     <form method="POST">
 
         <input type="hidden" name="id" value="<?= $row['id']; ?>">
+        <div class="formTable">
         <table>
         <tr><td>Imię:</td>
-        <td><input type="text" name="imie" value="<?= $row['imie']; ?>" required></td></tr>
+        <td><input class="box" type="text" name="imie" value="<?= $row['imie']; ?>" required></td></tr>
         <tr><td>Nazwisko:</td>
-        <td><input type="text" name="nazwisko" value="<?= $row['nazwisko']; ?>" required></td></tr>
+        <td><input class="box" type="text" name="nazwisko" value="<?= $row['nazwisko']; ?>" required></td></tr>
         <tr><td>Klasa:</td>
-        <td><input type="text" name="klasa" value="<?= $row['klasa']; ?>" required></td></tr>
+        <td><input class="boxNum" type="number" name="klasa" value="<?= $row['klasa']; ?>" required></td></tr>
         <tr><td>Data urodzin:</td>
-        <td><input type="date" name="data_urodzin" value="<?= $row['data_urodzin']; ?>" required></td></tr>
+        <td><input class="box" type="date" name="data_urodzin" value="<?= $row['data_urodzin']; ?>" required></td></tr>
         <tr><td>Miejscowosc:</td>
-        <td><input type="text" name="miejscowosc" value="<?= $row['miejscowosc']; ?>" required></td></tr>
+        <td><input class="box" type="text" name="miejscowosc" value="<?= $row['miejscowosc']; ?>" required></td></tr>
         <tr><td>Ulica:</td>
-        <td><input type="text" name="ulica" value="<?= $row['ulica']; ?>" required></td></tr>
+        <td><input class="box" type="text" name="ulica" value="<?= $row['ulica']; ?>" required></td></tr>
         <tr><td>Telefon:</td>
-        <td><input type="telef" name="telef" value="<?= $row['telef']; ?>" required></td></tr>
+        <td><input class="box" type="text" name="telef" value="<?= $row['telef']; ?>" required></td></tr>
         <tr><td>Mail:</td>
-        <td><input type="text" name="mail" value="<?= $row['mail']; ?>" required></td></tr>
-        </table>
-        <input class="przyc1" type="submit" value="Zapisz zmiany">
+        <td><input class="box" type="text" name="mail" value="<?= $row['mail']; ?>" required></td></tr>
+        </table><br>
+        <center><input class="przyc1" type="submit" value="Zapisz zmiany"></center>
+</div>
     </form>
-
+</div>
     <?php
     // Aktualizacja danych ucznia
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -84,6 +89,7 @@ include($deep.'sprupr.php');
 
     $conn->close();
     ?>
+</div>
 </div>
 </body>
 </html>

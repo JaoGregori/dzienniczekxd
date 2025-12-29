@@ -1,6 +1,7 @@
 <?php
 $korzen = __DIR__."/";
-session_start();
+include('deep.php');
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -20,21 +21,27 @@ include('../sprupr.php');
     ?>
 </head>
 <body>
-
-<?php include('../header1.php')?>
+<div id="top">
+        <?php include('../header1.php')?>
+</div>
 <?php include('../db_connect.php')?>
-<div id="content">
+<div id="contener">
+<div id="ContentPages">
     <br><br>
     <h1>Dodaj loginy uczniów i nauczycieli</h1>
     <br><br>
+    <div class="pageForm">
     <form method="POST">
+        <div class="">
         <table>
-            <tr><td>Login: </td><td><input type="text" name="login" required><br></td></tr>
-            <tr><td>Hasło: </td><td><input type="password" name="haslo" required><br></td></tr>
-            <tr><td>id ucznia/nauczyciela: </td><td><input type="number" name="id" required><br></td></tr>
+            <tr><td>Login: </td><td><input style="height:23px !important" class="box" type="text" name="login" required><br></td></tr>
+            <tr><td>Hasło: </td><td><input style="height:23px !important" class="box" type="password" name="haslo" required><br></td></tr>
+            <tr><td>id ucznia/nauczyciela: </td><td><input class="boxSmall" style="height:23px !important" type="number" name="id" required><br></td></tr>
         </table>
-        <center><input type="submit" name="log1" class="przyc1" value="Dodaj"></center>
+        </div>
+        <input type="submit" name="log1" class="przyc1" value="Dodaj">
     </form>
+    </div>
     <br>
 
     <?php
@@ -54,17 +61,18 @@ include('../sprupr.php');
     $sql = "SELECT * FROM loginy";
     $result =$conn->query($sql);
     if ($result->num_rows > 0) {
-        echo "<table>";
+        echo '<div id="tabOS"><table>';
         echo "<tr><th>ID</th><th>Login</th><th>Hasło</th><th>Opcje</th></tr>";
         while($row = $result->fetch_assoc()) {
-            echo "<tr><td>".$row["sz_id"]."</td><td>".$row["login"]."</td><td>".$row["haslo"]."</td><td><button class='przyc1' onclick='openPage(".$row['uz_id'].")'>Edytuj</button></td></tr>";
+            echo "<tr><td>".$row["sz_id"]."</td><td>".$row["login"]."</td><td>".$row["haslo"]."</td><td><button class='minwyb' onclick='openPage(".$row['uz_id'].")'>Edytuj</button></td></tr>";
         }
-        echo "</table>";
+        echo "</table></div>";
     } else {
         echo "0 wyników";
     }
    
     ?>
+</div>
 </div>
 </body>
 <script>

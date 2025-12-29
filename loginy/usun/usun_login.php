@@ -3,7 +3,7 @@ $korzen = __DIR__."/";
 include('deep.php');
 include($deep.'db_connect.php');
 
-session_start();
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {

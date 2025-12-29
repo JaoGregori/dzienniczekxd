@@ -1,7 +1,7 @@
 <?php
 $korzen = __DIR__."/";
 include('deep.php');
-session_start();
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -19,9 +19,12 @@ include($deep.'sprupr.php');
     <?php include($deep.'head.php') ?>
 </head>
 <body>
+<div id="top">
 <?php include($deep.'header1.php')?>
-<div id="content">
-<br><h1>Edytuj nauczyciela</h1>
+</div>
+<div id="contener">
+<div id="ContentPages">
+    <h1>Edytuj nauczyciela</h1>
     <?php
     // Połączenie z bazą danych
     include($deep.'db_connect.php');
@@ -35,20 +38,22 @@ include($deep.'sprupr.php');
     }
     ?>
 
+    <div class="pageForm">
     <form method="POST">
         <input type="hidden" name="id" value="<?= $row['id']; ?>">
+        <div class="formTable">
         <table>
         <tr><td>Imię:</td>
-        <td><input type="text" name="imie" value="<?= $row['imie']; ?>" required></td></tr>
+        <td><input class="box" type="text" name="imie" value="<?= $row['imie']; ?>" required></td></tr>
         <tr><td>Nazwisko:</td>
-        <td><input type="text" name="nazwisko" value="<?= $row['nazwisko']; ?>" required></td></tr>
+        <td><input class="box" type="text" name="nazwisko" value="<?= $row['nazwisko']; ?>" required></td></tr>
         <tr><td>Klasa:</td>
-        <td><input type="text" name="przedmiot" value="<?= $row['przedmiot']; ?>" required></td></tr>
-        </table>
-        <input type="submit" class="przyc1" value="Zapisz zmiany">
-        
+        <td><input class="box" type="text" name="przedmiot" value="<?= $row['przedmiot']; ?>" required></td></tr>
+        </table><br>
+        <center><input type="submit" class="przyc1" value="Zapisz zmiany"></center>
+        </div>
     </form>
-
+    </div>
     <?php
     // Aktualizacja danych ucznia
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -69,6 +74,7 @@ include($deep.'sprupr.php');
 
     $conn->close();
     ?>
+</div>
 </div>
 </body>
 </html>

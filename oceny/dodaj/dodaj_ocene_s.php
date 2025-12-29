@@ -1,7 +1,7 @@
 <?php
 $korzen = __DIR__."/";
 include('deep.php');
-session_start();
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -19,13 +19,16 @@ include($deep.'sprupr.php');
     <?php include($deep.'head.php') ?>
 </head>
 <body>
+<div id="top">
 <?php include($deep.'header1.php')?>
-<br>
-<div id="content">
-    <div class="BarDOS">
+</div>
+<div id="contener">
+<div id="ContentPages">
+    <div class="pageForm">
     <form method="POST">
+    <div class="formItems">
     Wybierz klasę: 
-    <select name="klasa">
+    <select class="boxSmall" name="klasa">
         <?php 
         include($deep.'db_connect.php');
         $sql = "SELECT klasa FROM uczniowie;";
@@ -38,11 +41,12 @@ include($deep.'sprupr.php');
             }} 
         ?>
     </select>
-    <input type="submit" value="Wybierz">
+    </div>
+    <input class="formButton" type="submit" value="Wybierz">
     </form>
     </div>
     
-    <div class="BarDOS">
+    <div id="pageFormSerialGrades">
     <form method="POST">
     <?php
     if(isset($_POST['klasa']))
@@ -50,24 +54,24 @@ include($deep.'sprupr.php');
         $klasa = $_POST['klasa'];
         $sql = "SELECT uczniowie.id, uczniowie.imie, uczniowie.nazwisko FROM uczniowie WHERE klasa = '$klasa';";
         $result = $conn->query($sql);
-        echo '
-         Waga:<input type="number" name="waga" min="1" required>
+        echo '<div class="formItems">
+         Waga:<input class="boxNum" type="number" name="waga" min="1" required></div>
         
-        Do średniej:<select name="dosredniej">
+        <div class="formItems">Do średniej:<select class="boxSelect" name="dosredniej">
             <option value="1">Tak</option>
             <option value="0">Nie</option>
-        </select>
+        </select></div>
         
-        Typ oceny:<select name="typ">
+        <div class="formItems">Typ oceny:<select class="boxSelect" name="typ">
             <option value="0">Zwykła</option>
             <option value="1">Semestralna</option>
-        </select>
+        </select></div>
         
-        Okres:<select name="okres">
+        <div class="formItems">Okres:<select class="boxSelect" name="okres">
             <option value="2" selected>2</option><option value="1">1</option>
             
-        </select>
-        Przedmiot: <select name="przedmiot">';
+        </select></div>
+        <div class="formItems">Przedmiot: <select class="boxSelect" name="przedmiot">';
         
         $sql1 = "SELECT przedmiot FROM przedmioty;";
         $result1 = $conn->query($sql1);
@@ -76,10 +80,11 @@ include($deep.'sprupr.php');
         {
             echo '<option value="'.$row1["przedmiot"].'">'.$row1["przedmiot"].'</option>';
         }
-        echo '</select>
-        Kolor:<input type="color" name="kolor">
+        echo '</select></div>
+        <div class="formItems">Kolor:<input type="color" name="kolor"></div>
         </div>
         <br>
+        <div id="tabOS">
         <table>
         <tr><th>ID</th><th>Imię</th><th>Nazwisko</th><th>Ocena</th><th>Komentarz</th</tr>';
         while($row = $result->fetch_assoc())
@@ -113,7 +118,8 @@ include($deep.'sprupr.php');
         }
         
         echo '</table>
-        <input type="submit" name="submit1" value="Dodaj oceny">';
+        </div>
+        <input class="formButton" type="submit" name="submit1" value="Dodaj oceny">';
         
 }
     ?>
@@ -151,6 +157,7 @@ include($deep.'sprupr.php');
         }
     }        
     ?>
+</div>
 </div>
 </body>
 </html>

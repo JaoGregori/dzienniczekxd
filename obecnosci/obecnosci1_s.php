@@ -1,9 +1,11 @@
 <?php
-session_start();
+$korzen = __DIR__."/";
+include($deep.'session.php');
+include('deep.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit();
 }
 if ($_SESSION['uzytkownik'] > 13)
@@ -16,32 +18,37 @@ if ($_SESSION['uzytkownik'] > 13)
 <head>
     <meta charset="UTF-8" />
     <title>Moje obecności</title>
-    <link rel="stylesheet" href="style.css">
-    <?php include('head.php'); ?>
+    <link rel="stylesheet" href="../style.css">
+    <?php include('../head.php'); ?>
 </head>
-<?php include('header1.php')?>
 <body>
-<br>
-<div id="content">
-    
-<div class="BarDOS">
+<div id="top">
+<?php include('../header1.php')?>
+</div>
+<div id="contener">
+<div id="ContentPages">
+    <h1>Obecności</h1>
+<div class="pageForm">
     <form method="POST">
+        <div class="formItems">
     Obecności od:
-    <input type="date" name="dataOD">
+    <input class="box" type="date" name="dataOD">
+        </div>
+        <div class="formItems">
     Obecności do:
-    <input type="date" name="dataDO">
-    <input type="submit" class="przyc1" name="wyb" value="Wybierz">
-                   Lub Wybierz wszystkie daty:
-    <input type="submit" class="przyc1" name="wsjo" value="Wszystkie daty">
+    <input class="box" type="date" name="dataDO">
+        </div>
+            <input type="submit" class="formButton" name="wyb" value="Wybierz">        
+            <input type="submit" class="formButton" name="wsjo" value="Wszystkie daty">
     </form>
-    </div>
+</div>
     <br>
-    <div id="tabOB">
-    <table >
+    
+    
     <?php
        if(isset($idu) && isset($_POST['wyb']) || isset($_POST['wsjo']))
        {
-            
+            echo'<div class="pageTable"> <table>';
             $dataOd=$_POST['dataOD'];
             $dataDo=$_POST['dataDO'];
             
@@ -123,12 +130,13 @@ Nauczyciel: '.$row1['imieN'].' '.$row1['nazwN'].'">
             }
        }
     ?>
-</table>
+        </table>
+        </div>
     </div>
 </div>
 <script>
             function openPage(a) {
-                let stro = 'edytuj_ob.php?&idob=' + a;
+                let stro = '/edytuj/edytuj_ob.php?&idob=' + a;
                 let popup = window.open(stro, "popupWindow", "width=600,height=600")
         }
         

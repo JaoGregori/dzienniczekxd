@@ -1,5 +1,6 @@
 <?php
-session_start();
+include($deep.'session.php');
+include('deep.php');
 
 if (!isset($_SESSION['zalogowany']))
 {

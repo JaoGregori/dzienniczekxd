@@ -1,7 +1,7 @@
 <?php
 $korzen = __DIR__."/";
 include('deep.php');
-session_start();
+include($deep.'session.php');
 if (!isset($_SESSION['zalogowany']))
 {
     header('Location: '.$deep.'index.php');
@@ -17,8 +17,7 @@ if (!isset($_SESSION['zalogowany']))
     <?php include($deep.'head.php') ?>
 </head>
 <body>
-<div id="content">
-<br><h1>Edytuj Ocenę</h1>
+<div id="ContentPages">
     <?php
     // Połączenie z bazą danych
     include($deep.'db_connect.php');
@@ -36,9 +35,10 @@ if (!isset($_SESSION['zalogowany']))
         $blokada = '';
     }
     ?>
-
+    <div class="pageForm">
     <form method="POST">
         <input type="hidden" name="id" value="<?php echo $ido; ?>">
+        <div class="formTable">
         <table>
             <tr><td>
         Uczeń: </td><td>
@@ -47,7 +47,7 @@ if (!isset($_SESSION['zalogowany']))
         $sql = "SELECT uczniowie.id, uczniowie.imie, uczniowie.nazwisko FROM uczniowie WHERE id='$idu'";
         $result = $conn->query($sql); 
          
-        echo '<select name="uczen_id" '.$blokada.'>';
+        echo '<select class="boxSelect" name="uczen_id" '.$blokada.'>';
         while ($row = $result->fetch_assoc())
         {
     
@@ -55,7 +55,7 @@ if (!isset($_SESSION['zalogowany']))
 
         }
         echo '</select> </td></tr><tr><td> Przedmiot:</td><td>';    
-        echo '<select name="przedmiot" '.$blokada.'>';
+        echo '<select class="boxSelect" name="przedmiot" '.$blokada.'>';
     
         $sql = "SELECT oceny.id, oceny.uczen_id, oceny.nauczyciel_id, oceny.ocena, oceny.okres, oceny.waga, oceny.dosredniej, oceny.typ, oceny.komentarz, oceny.data, oceny.czas, oceny.przedmiot, oceny.kolor, uczniowie.klasa, nauczyciele.imie, nauczyciele.nazwisko, uczniowie.imie AS 'imieu', uczniowie.nazwisko AS 'nazwiskou' 
                 FROM oceny JOIN uczniowie ON oceny.uczen_id=uczniowie.id JOIN nauczyciele ON oceny.nauczyciel_id=nauczyciele.id WHERE oceny.id='$ido'";
@@ -69,12 +69,12 @@ if (!isset($_SESSION['zalogowany']))
         </select><br>
          </td></tr><tr><td>
         Nauczyciel</td><td>
-        <select name="nauczyciel_id" <?=$blokada?>>
+        <select class="boxSelect" name="nauczyciel_id" <?=$blokada?>>
             <option value="<?= $row['nauczyciel_id']; ?>" required><?=$row['imie']?> <?=$row['nazwisko']?></option>
         </select><br>
         </td></tr><tr><td>
         Ocena:</td><td>
-        <select name="ocena" <?=$blokada?>>
+        <select class="boxSelect" name="ocena" <?=$blokada?>>
             <option value="<?=$row['ocena']?>"><?=$row['ocena']?></option>
             <option value="6.00">6</option>
             <option value="5.75">6-</option>
@@ -96,23 +96,23 @@ if (!isset($_SESSION['zalogowany']))
         </select><br>
         </td></tr><tr><td>
         Waga:</td><td>
-        <input type="number" name="waga" value="<?= $row['waga']; ?>" required <?=$blokada?>>
+        <input class="boxNum" type="number" name="waga" value="<?= $row['waga']; ?>" required <?=$blokada?>>
         </td></tr><tr><td>
         Licz do średniej:</td><td>
-        <select name="dosredniej" <?=$blokada?>>
+        <select class="boxSelect" name="dosredniej" <?=$blokada?>>
             <option value="1" <?= $row['dosredniej'] == 1 ? 'selected' : '' ?>>Tak</option>
             <option value="0" <?= $row['dosredniej'] == 0 ? 'selected' : '' ?>>Nie</option>
         </select>
         </td></tr><tr><td>
         Typ oceny: </td><td>
-        <select name="typ" <?=$blokada?>>
+        <select class="boxSelect" name="typ" <?=$blokada?>>
             
             <option value="0" <?= $row['typ'] == 0 ? 'selected' : '' ?>>Zwykła</option>
             <option value="1" <?= $row['typ'] == 1 ? 'selected' : '' ?>>Okresowa</option>
         </select>
         </td></tr><tr><td>
         Okres:</td><td>
-        <select name="okres" <?=$blokada?>>
+        <select class="boxSelect" name="okres" <?=$blokada?>>
             <?php include($deep.'okres.php');?>
         </select>
         </td></tr><tr><td>
@@ -120,16 +120,19 @@ if (!isset($_SESSION['zalogowany']))
         <input type="color" value="<?= $row['kolor'];?>" name="kolor" <?=$blokada?>>
         </td></tr><tr><td>
         Komentarz:</td><td>
-        <textarea name="komentarz" <?=$blokada?>><?= $row['komentarz']; ?></textarea>
+        <textarea name="komentarz" rows="5" cols="25" <?=$blokada?>><?= $row['komentarz']; ?></textarea>
         </td></tr><tr><td colspan="2">
-        <input class="przyc1" type="submit" onclick="closeAndRefresh1()" value="Zapisz zmiany" <?=$blokada?>>
-        
-        <button class="przyc1" onclick="closeAndRefresh(<?= $ido ?>)" <?=$blokada?>>usun</button>
+        <?php
+        if($_SESSION['uzytkownik'] < 13)
+        {
+            echo '<input class="przyc1" type="submit" onclick="closeAndRefresh1()" value="Zapisz zmiany" '.$blokada.'>
+            <button class="przyc1" onclick="closeAndRefresh('.$ido.')" '.$blokada.'>Usuń</button>';
+        }?>
         <button class="przyc1" onclick="closeAndRefresh2()">Powrót</button>
-        
+        </div>
         <?php } ?>
     </form>
-    
+        </div>
 
     <?php
     // Aktualizacja oceny
@@ -171,10 +174,15 @@ if (!isset($_SESSION['zalogowany']))
     $conn->close();
     ?>
     </div>
+    
     <script>
+    <?php
+    if($_SESSION['uzytkownik'] < 13)
+    {
+    echo '
     function closeAndRefresh(c) {
 
-    let stro1 = '<?php echo $deep;?>oceny/usun/usun_ocene.php?id=' + c;
+    let stro1 = "'.$deep.'oceny/usun/usun_ocene.php?id=" + c;
     let newTab = window.open(stro1, "_blank");
     window.opener.location.reload(); // Odśwież stronę 1
     window.close(); // Zamknij stronę 2
@@ -182,7 +190,8 @@ if (!isset($_SESSION['zalogowany']))
 
     function closeAndRefresh1() {
     
-    }
+    }';
+    }?>
     function closeAndRefresh2() 
     {
     window.opener.location.reload(); // Odśwież stronę 1
@@ -190,5 +199,6 @@ if (!isset($_SESSION['zalogowany']))
     }
     
 </script>
+    
 </body>
 </html>

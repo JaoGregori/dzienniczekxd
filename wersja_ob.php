@@ -1,3 +1,3 @@
 <?php
-$wersjad = '0.6.4';
+$wersjad = '1.0';
 ?>

@@ -1,7 +1,7 @@
 <?php
 $korzen = __DIR__."/";
 include('deep.php');
-session_start();
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -19,11 +19,12 @@ if (!isset($_SESSION['zalogowany']))
     <?php include('head.php') ?>
 </head>
 <body>
+<div id="top">
 <?php include('header1.php');
 include('db_connect.php');?>
-<div id="content">
-
-<br>
+</div>
+<div id="contener">
+<div id="ContentPages">
     <h2>Wersje tegoż dziennika oraz informacje o aktualizacji</h2>
     <ul>
     <li><b>0.1</b><br>- Utworzenie strony z podstawowymi zakładkami.</li>
@@ -39,7 +40,9 @@ include('db_connect.php');?>
     <li><b>0.6.2</b><br>- Poprawka kodu oraz poprawa interfejsu</li>
     <li><b>0.6.3</b><br>- Poprawka uprawnień</li>
     <li><b>0.6.4</b><br>- Uporządkowanie ścieżek stron<br>- Poprawki błędów i interfejsu</li>
-    </ol>
+    <li><b>1.0 REWOLUCJA</b><br>- Nowy wygląd interfejsu. Poprawiony CSS<br>- Duże poprawki działania strony<ul><li>Naprawa uprawnień użytkowników</li><li>Naprawa systemu wylogowywania</li><li>Przedłużony czas logowania</li><li>Favicon naprawiony</li></ul>- Przygotowanie strony do dodania nowych funkcji w kolejnych wersjach.</li>
+    </ul>
+</div>
 </div>
 </body>
 </html>

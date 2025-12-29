@@ -1,5 +1,5 @@
 <?php
-session_start();
+include($deep.'session.php');
 
 session_unset();
 

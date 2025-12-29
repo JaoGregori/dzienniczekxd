@@ -1,6 +1,7 @@
 <?php
+include('deep.php');
 $korzen = __DIR__."/";
-session_start();
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -20,8 +21,13 @@ include('db_connect.php');
     <?php include('head.php') ?>
 </head>
 <body>
+
+    <div id="top">
+        <?php include('header1.php');?>
+    </div>
+<div id="contener">
+<div id="contentHP">
     <?php
-    
     $idu = $_SESSION['uzytkownik'];
     $sql = "SELECT imie, nazwisko FROM uczniowie WHERE id='$idu'";
     $result = $conn->query($sql);
@@ -35,31 +41,50 @@ include('db_connect.php');
         $sql2 = "SELECT imie, nazwisko FROM nauczyciele WHERE id='$idu'";
         $result2 = $conn->query($sql2);
         $row = $result2->fetch_assoc();
-        echo "<center><h1>Witaj <div style='text-decoration: underline !important;'>". $row['imie']." ". $row['nazwisko']."</div> w dzienniku szkolnym</h1></center>";
+        echo "<center><h1>Witaj ". $row['imie']." ". $row['nazwisko']." w dzienniku szkolnym</h1></center>";
     }
-
     ?>
-    
     <div id="contg">
-        <div class="puste"></div>
-        <div id="gwyb">
-        <a href="uczniowie/uczniowie.php"><button class="pg">Uczniowie</button></a> 
-        <a href="nauczyciele/nauczyciele.php"><button class="pg">Nauczyciele</button></a>
-        <a href="oceny/oceny.php"><button class="pg">Oceny</button></a>
-        <a href="tematy/tematy.php"><button class="pg">Tematy lekcji</button></a>
-        <a href="uwagi.php"><button class="pg" disabled></button></a>
-        <a href="plan.php"><button class="pg" disabled>Plan lekcji</button></a>
-        <a href="obecnosci/obecnosci1.php"><button class="pg">Obecnosci</button></a>
-        <a href="wersje.php"><button class="pg">Wersje dziennika</button></a>
-        <a href="index.php"><button class="pg">Główna strona</button></a>
-        </div>
-        <div class="puste"></div><br><br>
-       
-    </div>
-    <div id="nl2"><img src="images/nl.png" id="nl" alt="Baba z bachorem uczy go ksiazeczki UwU"/></div>
-    Wersja - <?php include('wersja_ob.php'); echo $wersjad;?>
-    <br>
-     Już niebawem - nowa szata graficzna oraz nowe funkcje!
+        <div id="conttext">
+            <h2 style="margin-top: 0px; font-size: 26px;">dzienniczekxd</h2>
+            <p>
+                <strong>dzienniczekxd</strong> to miejsce stworzone z myślą o prostym i wygodnym zarządzaniu szkolnymi informacjami — 
+                ocenami, obecnościami oraz komunikacją między uczniami i nauczycielami. 
+                Projekt powstał jako moja osobista inicjatywa i jednocześnie pełni funkcję mojego portfolio programistycznego.
+            </p>
+            <p>
+                System został zaprojektowany tak, aby był szybki, intuicyjny i dostępny z każdego urządzenia. 
+                Tworzę go samodzielnie jako 
+                <strong>student Informatyki Ekonomicznej</strong>, stale rozwijając swoje kompetencje techniczne 
+                i poszerzając wiedzę w zakresie systemów informatycznych, analityki oraz projektowania rozwiązań IT.
+            </p>
+
+            <h2 style="margin-top: 30px; font-size: 26px;">Cel projektu</h2>
+    
+            <p>
+                Moim celem jest stworzenie funkcjonalnego narzędzia, które realnie ułatwia codzienną pracę w środowisku szkolnym. 
+                W przyszłości planuję dodawać kolejne moduły, takie jak:
+            </p>
+
+            <ul style="margin-left: 25px; margin-bottom: 25px;">
+                <li>rozszerzone statystyki ucznia,</li>
+                <li>zaawansowany panel nauczyciela,</li>
+                <li>system automatycznych powiadomień,</li>
+                <li>większe opcje personalizacji.</li>
+            </ul>
+
+            <p>
+                Dziękuję za korzystanie z dziennika i zapraszam do śledzenia kolejnych aktualizacji — projekt rozwijam na bieżąco 
+                i traktuję jako ważną część mojego portfolio.
+                </p>
+
+        </div>  
+        <div id="nl2">
+            <img src="images/nl.png" id="nl" alt="Baba z bachorem uczy go ksiazeczki UwU"/>
+        </div>     
+    </div>   
+</div>
+</div>
 </body>
 </html>
 

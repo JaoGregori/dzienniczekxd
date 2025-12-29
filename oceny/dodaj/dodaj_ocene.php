@@ -1,7 +1,7 @@
 <?php
 $korzen = __DIR__."/";
 include('deep.php');
-session_start();
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -9,6 +9,7 @@ if (!isset($_SESSION['zalogowany']))
     exit();
 }
 include($deep.'sprupr.php');
+include($deep.'db_connect.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,20 +20,24 @@ include($deep.'sprupr.php');
     <?php include($deep.'head.php') ?>
 </head>
 <body>
-
-<br>
-<div id="content">
+<div id="contener">
+    <div class="pageForm">
     <h1>Dodaj Ocenę</h1>
     <form method="POST">
+        <div class="formTable">
         <table>
             <tr><td>
         Uczeń: </td><td>
         <?php 
-         include($deep.'db_connect.php');
-        $sql = "SELECT uczniowie.id, uczniowie.imie, uczniowie.nazwisko FROM uczniowie ORDER BY klasa";
+        if(isset($_GET['przedmiot']))
+        {
+        $przedmiot = $_GET['przedmiot'];
+        $iducz = $_GET['idu'];
+        $okres = $_GET['okr'];
+        $sql = "SELECT uczniowie.id, uczniowie.imie, uczniowie.nazwisko FROM uczniowie WHERE uczniowie.id = $iducz ORDER BY klasa";
          $result = $conn->query($sql); 
          
-         echo '<select name="idu" id="idu">';
+         echo '<select name="idu" class="boxSelect" disabled>';
     while ($row = $result->fetch_assoc())
     {
     
@@ -40,12 +45,9 @@ echo '<option value="'.$row["id"].' " selected>'.$row["imie"].' '.$row['nazwisko
 
     }
     echo '</select></td></tr><tr><td> Przedmiot:</td>';    
-    echo '<td><select name="przedmiot" id="przedmiot">';
-    
-    $sql = "SELECT przedmiot FROM przedmioty;";
+    echo '<td><select name="przedmiot" class="boxSelect" disabled>';
+    $sql = "SELECT oceny.przedmiot FROM oceny WHERE oceny.id = $przedmiot;";
     $result = $conn->query($sql);
-   
-    
     while ($row = $result->fetch_assoc())
     {
         echo '<option value="'.$row["przedmiot"].'">'.$row["przedmiot"].'</option>';
@@ -54,10 +56,10 @@ echo '<option value="'.$row["id"].' " selected>'.$row["imie"].' '.$row['nazwisko
          ?>
         </td></tr><tr><td>
         Nauczyciel ID:</td><td>
-        <input type="text" name="nauczyciel_id" value="1" required></td></tr><tr><td>
+        <input class="box" type="text" name="nauczyciel_id" value="<?php echo $_SESSION['uzytkownik']; ?>" disabled required></td></tr><tr><td>
         Ocena:</td>
         <td>
-        <select name="ocena">
+        <select class="boxSelect" name="ocena">
             <option value="6.00">6</option>
             <option value="5.75">6-</option>
             <option value="5.50">5+</option>
@@ -77,37 +79,45 @@ echo '<option value="'.$row["id"].' " selected>'.$row["imie"].' '.$row['nazwisko
             <option value="0.00">nb</option>
         </select></td></tr><tr><td>
         Waga:</td><td>
-        <input type="number" name="waga" required>
+        <input class="boxNum" type="number" name="waga" required>
         </td></tr><tr><td>
         Do średniej:</td><td>
-        <select name="dosredniej">
+        <select class="boxSelect" name="dosredniej">
             <option value="1">Tak</option>
             <option value="0">Nie</option>
         </select>
         </td></tr><tr><td>
         Typ oceny:</td><td>
-        <select name="typ">
+        <select class="boxSelect" name="typ">
             <option value="0">Zwykła</option>
             <option value="1">Semestralna</option>
         </select>
         </td></tr><tr><td>
         Okres:</td><td>
-        <select name="okres" >
-        <option value="2" selected>2</option><option value="1">1</option>
+        <select class="boxSelect" name="okres" >
+        <?php
+        if($okres == 2)
+        {
+            echo '<option value="2" selected>2</option>';
+        }else
+        {
+            echo '<option value="1">1</option>';
+        }
+        ?>
         </select>
         </td></tr><tr><td>
         Kolor:</td><td>
         <input type="color" name="kolor">
         </td></tr><tr><td>
         Komentarz:</td><td>
-        <textarea name="komentarz" rows="5" cols="40"></textarea><br>
-        <br>
-        
-            </select>
-        <input name="submit1d" type="submit" value="Dodaj">
+        <textarea name="komentarz" rows="5" cols="25"></textarea>
         </td></tr>
+    </table>
+    <br>
+    <center><input class="przyc1" name="submit1d" type="submit" value="Dodaj"></center>
+    </div>   
     </form>
-
+    </div>
     <?php
     // Dodawanie nowej oceny
         if (isset($_POST['submit1d'])){
@@ -140,6 +150,10 @@ echo '<option value="'.$row["id"].' " selected>'.$row["imie"].' '.$row['nazwisko
             echo "Błąd: " . $conn->error;
         } 
         $conn->close();
+    }
+    }else
+    {
+        echo "<script>window.close();</script>";
     }
     ?>
 </div>

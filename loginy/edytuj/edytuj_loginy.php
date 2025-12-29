@@ -1,7 +1,7 @@
 <?php
 $korzen = __DIR__."/";
 include('deep.php');
-session_start();
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -21,12 +21,11 @@ include(''.$deep.'sprupr.php');
 </head>
 <body>
     <br/><br/>
-<div id="content">
+<div id="ContentPages">
+    <div class="pageForm">
     <form action="edytuj_loginy.php" method="POST">
-        
-        <table>
+        <div class="formTable">
             <input type="hidden" name="uzid" value="<?php echo $_GET['uzid']; ?>">
-            <tr><td>Edycja:</td><td>
             <?php 
             $uzid = $_GET['uzid'];    
             $sql = "SELECT * FROM loginy WHERE uz_id='$uzid'";
@@ -36,9 +35,9 @@ include(''.$deep.'sprupr.php');
             while ($row = $result->fetch_assoc())
             {
                 echo '<table>
-            <tr><td>Login: </td><td><input type="text" name="login" value="'.$row['login'].'" required><br></td></tr>
-            <tr><td>Hasło: </td><td><input type="password" name="haslo" value="'.$row['haslo'].'" required><br></td></tr>
-            <tr><td>id ucznia/nauczyciela: </td><td><input type="number" name="id" value="'.$row['sz_id'].'" required><br></td></tr>
+            <tr><td>Login: </td><td><input class="box" type="text" name="login" value="'.$row['login'].'" required><br></td></tr>
+            <tr><td>Hasło: </td><td><input class="box" type="password" name="haslo" value="'.$row['haslo'].'" required><br></td></tr>
+            <tr><td>id ucznia/nauczyciela: </td><td><input class="boxNum" type="number" name="id" value="'.$row['sz_id'].'" required><br></td></tr>
         </table>';
 
             }
@@ -51,6 +50,7 @@ include(''.$deep.'sprupr.php');
         </table>
         <input type="submit" name="zatw4" class="przyc1" value="Zapisz"> <button type="button" class="przyc1" onclick="closeAndRefresh(<?php echo $_GET['uzid']; ?>)">Usuń</button>
     </form>
+    </div>
     <?php
 
             if(isset($_POST['zatw4']))

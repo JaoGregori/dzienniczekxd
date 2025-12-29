@@ -1,6 +1,7 @@
 <?php
 $korzen = __DIR__."/";
-session_start();
+include('deep.php');
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -11,52 +12,106 @@ if (!isset($_SESSION['zalogowany']))
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Oceny</title>
+    <title>Oceny ucznia</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../style.css">
     <link rel="icon" type="image/x-icon" href="../icon.png">
     <?php include('../head.php') ?>
 </head>
 <body>
+    <div id="top">
+        <?php include('../header1.php');
+        include('../db_connect.php');?>
+    </div>
+<div id="contener">
+    <div id="ContentPages">
+        <h1>Oceny ucznia</h1>
+        <?php 
+            if ($_SESSION['uzytkownik'] < 13)
+            {
+                if(isset($_POST['OUTidu']))
+                    {
+                        $iducz = $_POST['OUTidu'];
+                    }
+        ?>
+            <div id="ocenygl">
+                <form method="post" action="">
+                    <div class="pageForm">
+                        <div class="formItems">
+                            Wybierz klasę: <select class="boxSelect" name="klasaa">
+                            <?php
+                            $kod = NULL;
+                            $sql = "SELECT DISTINCT uczniowie.klasa FROM uczniowie" ;
+                            $result = $conn->query($sql);
+                            $ostatnialk = NULL;
+                            while($row = $result->fetch_assoc())
+                            {
+                                if($row['klasa'] !== $ostatnialk)
+                                {
+                                    echo '<option  value="'.$row['klasa'].'"';
+                                    if(isset($_POST['klasaa']) && $_POST['klasaa'] == $row['klasa']){echo 'selected';}
+                                    echo'>'.$row['klasa'].'</option>';
+                                    $ostatnialk = $row['klasa'];
+                                }
+                            }?>
+                            </select>
+                        </div>
+                        <div class="formItems">
+                            <?php 
+                            if(isset($_POST['sub1']))
+                            {
+                                $klasaFORM = $_POST['klasaa'];
+                                echo 'Wybierz ucznia: <select class="boxSelect" name="idu">';
+                                $sql = "SELECT imie, nazwisko, id FROM uczniowie WHERE klasa=$klasaFORM" ;
+                                $result = $conn->query($sql);
+                                $ostatniapr = NULL;
 
-<?php include('../header1.php');
-include('../db_connect.php');?>
-<div id="content">
-<br><br><br>
-<?php 
-    if ($_SESSION['uzytkownik'] < 13)
-    {
-    echo '<form method="post">
-    <br/>Uczeń:'; 
-    $sql = "SELECT uczniowie.id, uczniowie.imie, uczniowie.nazwisko
-    FROM uczniowie";
-    $result = $conn->query($sql);
-    echo '<select name="idu" id="idu">';
-        while ($row = $result->fetch_assoc())
+                                while($row = $result->fetch_assoc())
+                                {
+                                    echo '<option  value="'.$row['id'].'"';
+                                    if(isset($_POST['idu']) && $_POST['idu'] == $row['id']){echo 'selected';}
+                                    echo '>'.$row['imie'].' '.$row['nazwisko'].'</option>';
+                                }
+                            } ?>
+                            </select>
+                        </div>
+                <input class="formButton" name="sub1" type="submit" value="Sprawdź oceny">
+            </div>
+        </form>
+    </div>
+        <?php
+            }else
+            {
+                if(isset($_POST['OUTidu']))
+                    {
+                        $iducz = $_POST['OUTidu'];
+                    }else
+                    {
+                        $iducz = $_SESSION['uzytkownik'];
+                    }
+            }
+            if (isset($_POST['sub1']) && isset($_POST['idu']) || isset($iducz))
+            {   
+                if  (isset($_POST['sub1']))
+                {
+                    $iducz = $_POST['idu'];
+                }
+    
+    
+        ?>
+    <div class="pageTable">
+        <center><h2><?php 
+        $sql1 = "SELECT imie, nazwisko
+        FROM uczniowie 
+        WHERE id ='$iducz'";
+        $result1 = $conn->query($sql1);
+        while ($row1 = $result1->fetch_assoc())
         {
-        
-        echo '<option value="'.$row["id"].' " selected>'.$row["imie"].' '.$row['nazwisko'].'</option>';
-
+            echo $row1['imie'].' '.$row1['nazwisko'];
         }
-    
-    
-    echo '<input type="submit" name="sub1" value="Sprawdź">
-    </form>';
-    
-    }else{
-        $iducz = $_SESSION['uzytkownik'];
-    }
-    ?>
-    <?php 
-    if (isset($_POST['sub1']) || isset($iducz))
-    {   
-        if  (isset($_POST['sub1']))
-        {
-            $iducz = $_POST['idu'];
-        }
-    
-    ?>
-    <table class="wynik">
+        ?>
+        </h2></center>
+    <table>
         <tr><th>Przedmiot</th><th>Oceny S.I</th><th>Średnia</th><th>Ocena Śródroczna</th><th>Oceny S.II</th><th>Średnia</th><th>Ocena Roczna</th></tr>
         <?php
         $sql = "SELECT uczniowie.id, uczniowie.imie, uczniowie.nazwisko, oceny.przedmiot
@@ -106,14 +161,14 @@ Komentarz: '.$row52['komentarz'].'">
                 {
                     $sumwaga = $row212['sumwaga'];
                 }
-                if ($sumwaga > 0)
-                {
-                echo '<div name="sr" class="sredniaw">'.round($wazonasum/$sumwaga, 2).'</div>
-                <input type="hidden" name="sred1" value="'.round($wazonasum/$sumwaga, 2).'">';
-                }else
-                {
-                    echo '<div class="sredniaw">0</div>';
-                }
+                if ($sumwaga > 0 )
+                    {
+                        echo '<div name="sr" class="sredniaw">'.round($wazonasum/$sumwaga, 2).'</div>
+                        <input type="hidden" name="sred1" value="'.round($wazonasum/$sumwaga, 2).'">';
+                    }else
+                    {
+                        echo '<div class="sredniaw">0</div>';
+                    }
                 
             
             ?></td>
@@ -179,6 +234,7 @@ Komentarz: '.$row['komentarz'].'">
                 {
                     $sumwaga1 = $row222['sumwaga'];
                 }
+                
                 if ($sumwaga1 > 0)
                 {
                 echo '<div name="sr" class="sredniaw">'.round($wazonasum1/$sumwaga1, 2).'</div>
@@ -187,7 +243,7 @@ Komentarz: '.$row['komentarz'].'">
                 {
                     echo '<div class="sredniaw">0</div>';
                 }
-
+                
             
             ?></td>
             <td>
@@ -208,13 +264,16 @@ Komentarz: '.$row['komentarz'].'">
 <?php   $ostatniaos = $przedmiot;
         }
     }
- ?>
- <tr><td colspan="2">Średnia z ocen śródrocznych</td><td><div class="sredniaw"><div id="result"></div></div></td><td></td><td >Średnia z ocen II semestr</td><td><div class="sredniaw"><div id="result1"></div></div></td></tr>
-</table>
-<p id="cos"></p>
-<p id="cos1"></p>
-    
+if(isset($_POST['idu']))
+{
+    echo ' <tr><td colspan="2">Średnia z ocen śródrocznych</td><td><div class="sredniaw"><div id="result"></div></div></td><td></td><td >Średnia z ocen II semestr</td><td><div class="sredniaw"><div id="result1"></div></div></td></tr>';
+}
+?>
+ </table>
+</div>
+</div>
     </div>
+</div>
 </body>
 <script>
         // Pobierz wszystkie elementy z klasą 'ocenka3'

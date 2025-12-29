@@ -1,7 +1,7 @@
 <?php
 $korzen = __DIR__."/";
 include('deep.php');
-session_start();
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -9,6 +9,14 @@ if (!isset($_SESSION['zalogowany']))
     exit();
 }
 include($deep.'sprupr.php');
+
+if($_SESSION['uzytkownik'] > 13)
+    {
+        $blokada = 'disabled';
+    }else
+    {
+        $blokada = '';
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,9 +28,11 @@ include($deep.'sprupr.php');
 </head>
 <body>
     <br/><br/>
-<div id="content">
+<div id="contener">
+    <div class="pageForm">
     <form method="POST">
         <input type="hidden" name="id" value="<?php echo $_GET['idob']; ?>">
+        <div class="formTable">
         <table>
             <tr><td>Uczeń:</td><td>
             <?php 
@@ -36,7 +46,7 @@ include($deep.'sprupr.php');
                 echo '<input name="idob1" type="hidden" value="'.$row['id'].'"/><input disabled type="text" value="'.$row["imie"].' '.$row['nazwisko'].'"/>
                 <tr><td>Data:</td><td><input type="date" value="'. $row['data'].'" disabled><input type="time" value="'. $row['godzina'].'" disabled></td></tr>
                 <tr><td>Status:</td><td>
-                <select name="status">
+                <select class="boxSelect" name="status" '.$blokada.'>
                     <option value="ob"';
                     if($row['status'] == 'ob') {echo ' selected';}
                     echo '>Obecny</option>
@@ -58,9 +68,19 @@ include($deep.'sprupr.php');
             
             
             </td></tr>
-        </table>
-        <input type="submit" name="zatw4" class="przyc1" value="Zapisz"> <button type="button" class="przyc1" onclick="closeAndRefresh(<?php echo $_GET['idob']; ?>)">Usuń</button>
+        </table><br>
+        <?php
+        if($_SESSION['uzytkownik'] < 13)
+        {
+            echo '<input type="submit" name="zatw4" class="przyc1" value="Zapisz"> 
+            <button type="button" class="przyc1" onclick="closeAndRefresh(';echo $_GET['idob']; echo ')">Usuń</button>';
+        }?>
+        <button class="przyc1" onclick="closeAndRefresh2()">Powrót</button>
+        </div>
+        
+        
     </form>
+    </div>
     <?php
 
             if(isset($_POST['zatw4']))
@@ -79,16 +99,22 @@ include($deep.'sprupr.php');
     ?>
 </div>
     <script>
+    <?php
+    if($_SESSION['uzytkownik'] < 13)
+    {
+    echo '
     function closeAndRefresh(c) {
 
-    let stro1 = '<?php echo $deep?>/obecnosci/usun/usun_ob.php?idob=' + c;
+    let stro1 = "'.$deep.'/obecnosci/usun/usun_ob.php?idob=" + c;
     let newTab = window.open(stro1, "_blank");
     window.opener.location.reload(); // Odśwież stronę 1
     window.close(); // Zamknij stronę 2
-    }
+    }';
+    }?>
 
-    function closeAndRefresh1() {
-    
+    function closeAndRefresh2() {
+    window.opener.location.reload(); // Odśwież stronę 1
+    window.close(); // Zamknij stronę 2
     }
 </script>
 </body>

@@ -90,3 +90,35 @@ SET id = id + 10
 ORDER BY id DESC;
 
 --------------------------------------------
+
+<?php 
+        if ($_SESSION['uzytkownik'] < 13)
+        {
+            echo '<form method="post">
+            <div class="pageForm">
+            <div class="formItems">
+            Uczeń:'; 
+            $sql = "SELECT uczniowie.id, uczniowie.imie, uczniowie.nazwisko
+            FROM uczniowie";
+            $result = $conn->query($sql);
+            echo '<select class="box" name="idu" id="idu">';
+                while ($row = $result->fetch_assoc())
+                {
+                    echo '<option value="'.$row["id"].' " selected>'.$row["imie"].' '.$row['nazwisko'].'</option>';
+                }
+            echo '</div><input class="formButton" type="submit" name="sub1" value="Sprawdź">
+            </div>
+            </form>';
+        }else{
+            $iducz = $_SESSION['uzytkownik'];
+        }
+    ?>
+    <?php 
+        if (isset($_POST['sub1']) || isset($iducz))
+        {   
+            if  (isset($_POST['sub1']))
+            {
+                $iducz = $_POST['idu'];
+            }
+    
+    ?>

@@ -1,7 +1,7 @@
 <?php
 $korzen = __DIR__."/";
 include('deep.php');
-session_start();
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -20,26 +20,27 @@ include($deep.'sprupr.php');
     include($deep.'db_connect.php') ?>
 </head>
 <body>
-    
+<div id="top">
 <?php include($deep.'header1.php')?>
-<div id="content">
-    <br>
-    <div class="BarDOS">
+</div>
+<div id="contener">
+<div id="ContentPages">
+    <div class="pageForm">
     <form method="POST">
     Wybierz klasę: 
-    <select name="klasa">
+    <select class="boxSelect" name="klasa">
         <?php
         $sql = "SELECT DISTINCT klasa FROM uczniowie;";
         $result = $conn->query($sql);
-        $ostatnialk = NULL;
             while($row = $result->fetch_assoc()){
                 if($row['klasa'] !== $ostatnialk) {
-                echo '<option  value="'.$row['klasa'].'">'.$row['klasa'].'</option>';
-                $ostatnialk = $row['klasa'];
+                echo '<option  value="'.$row['klasa'].'"';
+                if(isset($_POST['klasa']) && $_POST['klasa'] == $row['klasa']){echo 'selected';}
+                echo'>'.$row['klasa'].'</option>';
             }} 
         ?>
     </select>
-    <input type="submit" name="zatw1" value="Wybierz">
+    <input class="formButton" type="submit" name="zatw1" value="Wybierz">
     </form>
     </div>
     <?php
@@ -48,7 +49,7 @@ include($deep.'sprupr.php');
         $sql = "SELECT id, imie, nazwisko FROM uczniowie WHERE klasa = '$klasa';";
         $result = $conn->query($sql);
 
-        echo '<br>
+        echo '<div id="tabOB">
         <table>
         <form method="POST">
         <input type="hidden" name="klasa" value="' . htmlspecialchars($klasa) . '"> <!-- Ukryte pole dla klasy -->
@@ -69,7 +70,8 @@ include($deep.'sprupr.php');
         }
 
         echo '</table>
-        <input type="submit" name="dodaj_ob" value="Dodaj obecności">
+        </div>
+        <input class="formButton" type="submit" name="dodaj_ob" value="Dodaj obecności">
         </form>';
 
         if (isset($_POST['dodaj_ob'])) {
@@ -95,6 +97,7 @@ include($deep.'sprupr.php');
         }
     }
     ?>
+</div>
 </div>
 </body>
 </html>

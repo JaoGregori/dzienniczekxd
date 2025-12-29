@@ -1,5 +1,6 @@
 <?php
-session_start();
+include($deep.'session.php');
+include('deep.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -17,10 +18,13 @@ $korzen = __DIR__."/";
     <?php include('../head.php') ?>
 </head>
 <body>
+<div id="top">
 <?php include('../header1.php')?>
-<div id="content">
-<br><h1>Lista nauczycieli</h1>
-    
+</div>
+<div id="contener">
+<div id="ContentPages">
+    <h1>Lista nauczycieli</h1>
+    <div id="tabOS">
     <table>
         <tr>
             <th>ID</th>
@@ -43,14 +47,16 @@ while($row = $result->fetch_assoc()){ ?>
             <td><?= $row['nazwisko']; ?></td>
             <td><?= $row['przedmiot']; ?></td>
             <td>
-                <a href="edytuj/edytuj_nauczyciela.php?id=<?= $row['id']; ?>">Edytuj</a> |
-                <a href="usun/usun_nauczyciela.php?id=<?= $row['id']; ?>">Usuń</a>
+                <a href="edytuj/edytuj_nauczyciela.php?id=<?= $row['id']; ?>"><button class="minwyb">Edytuj</button></a> 
+                <a href="usun/usun_nauczyciela.php?id=<?= $row['id']; ?>"><button class="minwyb">Usuń</button></a>
             </td>
         </tr>
         <?php } ?>
     </table>
+</div>
     <br>
     <a href="dodaj/dodaj_nauczyciela.php"><button class="przyc1">Dodaj nowego nauczyciela</button></a>
+</div>
 </div>
 </body>
 </html>

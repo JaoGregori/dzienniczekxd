@@ -1,6 +1,7 @@
 <?php
 $korzen = __DIR__."/";
-session_start();
+include('deep.php');
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -24,63 +25,61 @@ if ($_SESSION['uzytkownik'] > 13)
     ?>
 </head>
 <body>
-
+<div id="top">
 <?php include('../header1.php')?>
+</div>
 <?php include('../db_connect.php')?>
-<div id="content">
-<br><h1>Lista Ocen</h1>
-    <div class="minwy">
-<?php
-if ($_SESSION['uzytkownik'] < 13)
-{
-    echo '
-    <button onclick="openPage1()" class="minwyb">Dodaj nową ocenę</button>
-    <a class="minwyba" href="dodaj/dodaj_ocene_s.php"><button class="minwyb">Dodaj nową ocenę Seryjnie</button></a>';
-}
-    echo '<a class="minwyba" href="oceny_s.php"><button class="minwyb">Zobacz konkretne oceny ucznia</button></a>
+<div id="contener">
+<div id="ContentPages">
+    <h1>Lista Ocen</h1>
+    <div class="buttonsContainer">
+    <?php
+    if ($_SESSION['uzytkownik'] < 13)
+    {
+        echo '
+        <a class="minwyba" href="dodaj/dodaj_ocene_s.php"><button>Dodaj oceny seryjnie</button></a>';
+    }
+    echo '<a class="minwyba" href="oceny_s.php"><button>Sprawdź oceny ucznia</button></a>
     </div>';
     ?>
-    <br>
-    
     <div id="ocenygl">
-        <div class="BarDOS">
-        <form method="post" action="" >
+        <form method="post" action="">
+            <div class="pageForm">
+                <div class="formItems">
+                    Wybierz klasę: <select class="boxSmall" name="klasaa">
+                    <?php
+                    $kod = NULL;
+                    $sql = "SELECT DISTINCT uczniowie.klasa FROM uczniowie" ;
+                    $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc())
+                    {
+                        echo '<option  value="'.$row['klasa'].'"';
+                        if(isset($_POST['klasaa']) && $_POST['klasaa'] == $row['klasa']){echo 'selected';}
+                        echo'>'.$row['klasa'].'</option>';
+                    }?>
+                    </select>
+                </div>
+                <div class="formItems">
+                    Wybierz przedmiot: <select class="boxSelect" name="przedm">
+                    <?php 
+                    $sql = "SELECT przedmiot FROM przedmioty" ;
+                    $result = $conn->query($sql);
 
-            Wybierz klasę: <select name="klasaa">
-            <?php
-            $kod = NULL;
-            $sql = "SELECT DISTINCT uczniowie.klasa FROM uczniowie" ;
-            $result = $conn->query($sql);
-            $ostatnialk = NULL;
-            while($row = $result->fetch_assoc()){
-                if($row['klasa'] !== $ostatnialk) {
-                echo '<option  value="'.$row['klasa'].'">'.$row['klasa'].'</option>';
-                $ostatnialk = $row['klasa'];
-            }} ?>
-
-            </select>
-            Wybierz przedmiot: <select name="przedm">
-            <?php 
-            $sql = "SELECT przedmiot FROM przedmioty" ;
-            $result = $conn->query($sql);
-            $ostatniapr = NULL;
-
-            while($row = $result->fetch_assoc())
-            {
-                if($row['przedmiot'] !== $ostatniapr) 
-                {
-                    echo '<option  value="'.$row['przedmiot'].'">'.$row['przedmiot'].'</option>';
-                    $ostatniapr = $row['przedmiot'];
-                }
-            }?>
-            </select>
-
-            <input name="socen" type="submit" class="przyc1" value="Sprawdź oceny">
-            
+                    while($row = $result->fetch_assoc())
+                    {
+                       
+                        echo '<option  value="'.$row['przedmiot'].'"';
+                        if(isset($_POST['przedm']) && $_POST['przedm'] == $row['przedmiot']){echo 'selected';}
+                        echo '>'.$row['przedmiot'].'</option>';
+                        
+                    }?>
+                    </select>
+                </div>
+                <input class="formButton" name="socen" type="submit" value="Sprawdź oceny">
+            </div>
         </form>
-        </div>
     </div>
-    <br>
+    
     <?php 
     if(isset($_POST['socen']))
     {
@@ -89,21 +88,7 @@ if ($_SESSION['uzytkownik'] < 13)
         echo '<h2>'.$przedm.' Klasa: ';
         echo $klass.'</h2>';
     }
-    ?>
-    <table name="Tabela ocenek" alt="Tabela ocenek">
-        <tr>
-            
-            <th>ID</th>
-            <th>Imię i nazwisko</th>
-            <th>Ocena S.I</th>
-            <th class="sred">Średnia za okres I</th>
-            <th class="sred">Śródroczna</th>
-            <th>Ocena S. II</th>
-            <th class="sred">Średnia za okres II</th>
-            <th class="sred">Roczna</th>
-
-        </tr>
-        <?php
+  
         // Pobieranie listy ocen
         if(isset($_POST['socen']))
         {
@@ -112,8 +97,19 @@ if ($_SESSION['uzytkownik'] < 13)
             $sql = "SELECT oceny.id, oceny.uczen_id, oceny.nauczyciel_id, oceny.ocena, oceny.okres, oceny.waga, oceny.dosredniej, oceny.komentarz, oceny.data, oceny.czas, oceny.przedmiot, uczniowie.klasa, nauczyciele.imie, nauczyciele.nazwisko, uczniowie.imie AS 'imieu', uczniowie.nazwisko AS 'nazwiskou' 
             FROM oceny JOIN uczniowie ON oceny.uczen_id=uczniowie.id JOIN nauczyciele ON oceny.nauczyciel_id=nauczyciele.id WHERE uczniowie.klasa='$klass' AND oceny.przedmiot='$przedm'" ;
             $result = $conn->query($sql);
+            echo'<div class="pageTable"><table name="Tabela ocenek" alt="Tabela ocenek">
+            <tr>
+                    <th>ID</th>
+                    <th>Imię i nazwisko</th>
+                    <th>Ocena S.I</th>
+                    <th class="sred">Średnia za okres I</th>
+                    <th class="sred">Śródroczna</th>
+                    <th>Ocena S. II</th>
+                    <th class="sred">Średnia za okres II</th>
+                    <th class="sred">Roczna</th>
+            </tr>';
             $ostatniaos = NULL;
-            
+
             while($row = $result->fetch_assoc())
             { 
             if($row['uczen_id'] !== $ostatniaos) 
@@ -122,7 +118,8 @@ if ($_SESSION['uzytkownik'] < 13)
                 <td><?=$row['uczen_id']?></td>
                 <td><?=$row['imieu']?> <?=$row['nazwiskou']?></td>
                 <td><div class="ocenka5"><?php
-            
+                $idoceny = $row['id'];
+                $okres = $row['okres'];
                 $iducz = $row['uczen_id'];
                 $sql21 = "SELECT oceny.id, oceny.uczen_id, oceny.nauczyciel_id, oceny.ocena, oceny.okres, oceny.waga, oceny.dosredniej, oceny.komentarz, oceny.data, oceny.czas, oceny.kolor, nauczyciele.imie, nauczyciele.nazwisko 
                 FROM oceny JOIN uczniowie ON oceny.uczen_id=uczniowie.id JOIN nauczyciele ON oceny.nauczyciel_id=nauczyciele.id WHERE oceny.przedmiot='$przedm' AND oceny.uczen_id='$iducz' AND typ='0' AND okres='1'";
@@ -159,10 +156,12 @@ Komentarz: '.$row['komentarz'].'">
                     }
                     if ($sumwaga > 0)
                     {
-                    echo '<div class="sredniaw">'.round($wazonasum/$sumwaga, 2).'</div>';
+                    echo '<div class="ocenaInfo"><button onclick="openAdd('.$idoceny.','.$iducz.','.$okres.')" class="minwyb">+</button>
+                    <div class="sredniaw">'.round($wazonasum/$sumwaga, 2).'</div></div>';
                     }else
                     {
-                        echo '<div class="sredniaw">0</div>';
+                        echo '<div class="ocenaInfo"><button onclick="openAdd('.$idoceny.','.$iducz.','.$okres.')" class="minwyb">+</button>
+                        <div class="sredniaw">0</div></div>';
                     }
                     
                 
@@ -193,8 +192,9 @@ Komentarz: '.$row['komentarz'].'">
                 {
                     
                 while($row = $result123->fetch_assoc())
-                
-                {   
+                {
+                    $idoceny = $row['id'];   
+                    $okres = $row['okres'];
                    // echo '<div class="doc"><a href="dodaj_ocene.php?idu='.$row['uczen_id'].'">'.$row['ocena'].'</a></div>';
                     $lds=$row['dosredniej'];
                     $ldsp= NULL;
@@ -231,10 +231,12 @@ Komentarz: '.$row['komentarz'].'">
                     }
                     if ($sumwaga1 > 0)
                     {
-                    echo '<div class="sredniaw">'.round($wazonasum1/$sumwaga1, 2).'</div>';
+                    echo '<div class="ocenaInfo"><button onclick="openAdd('.$idoceny.','.$iducz.','.$okres.')" class="minwyb">+</button>
+                    <div class="sredniaw">'.round($wazonasum1/$sumwaga1, 2).'</div></div>';
                     }else
                     {
-                        echo '<div class="sredniaw">0</div>';
+                        echo '<div class="ocenaInfo"><button onclick="openAdd('.$idoceny.','.$iducz.','.$okres.')" class="minwyb">+</button>
+                        <div class="sredniaw">0</div></div>';
                     }
 
                 
@@ -254,12 +256,12 @@ Komentarz: '.$row['komentarz'].'">
                     ?>
                 </td>
             </tr>
-    <?php   $ostatniaos = $iducz;
+            <?php   $ostatniaos = $iducz;
             }
         }
-    } ?>
-    </table>
-    
+        } ?>
+        </table>
+    </div>
         </div>
         <script>
         // Pobierz wszystkie elementy z klasą 'ocenka3'
@@ -286,9 +288,8 @@ Komentarz: '.$row['komentarz'].'">
                 
             }
         }
-        
-        
     </script>
+</div> 
     <script>
             function openPage(a, b) {
                 let stro = 'edytuj/edytuj_ocene.php?idu=' + a + '&ido=' + b;
@@ -296,6 +297,10 @@ Komentarz: '.$row['komentarz'].'">
         }
         function openPage1() {
                 let stro = 'dodaj/dodaj_ocene.php';
+                let popup = window.open(stro, "popupWindow", "width=600,height=600")
+        }
+        function openAdd(a, b, c) {
+                let stro = 'dodaj/dodaj_ocene.php?przedmiot=' + a + '&idu=' + b + '&okr='+ c;
                 let popup = window.open(stro, "popupWindow", "width=600,height=600")
         }
         

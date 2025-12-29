@@ -1,6 +1,7 @@
 <?php
 $korzen = __DIR__."/";
-session_start();
+include('deep.php');
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {

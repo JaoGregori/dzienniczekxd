@@ -1,7 +1,7 @@
 <?php
 $korzen = __DIR__."/";
 include('deep.php');
-session_start();
+include($deep.'session.php');
 
 if (!isset($_SESSION['zalogowany']))
 {
@@ -20,22 +20,31 @@ include($deep.'db_connect.php');
     <?php include($deep.'head.php') ?>
 </head>
 <body>
+<div id="top">
 <?php include($deep.'header1.php')?>
-<div id="content">
+</div>
+<div id="contener">
+<div id="ContentPages">
     <br><h1>Dodaj nowego ucznia</h1>
+    <div class="pageForm">
     <form method="post">
+        <div class="formTable">
         <table>
-        <tr><td>Imię: </td><td><input type="text" name="imie" required></td></tr>
-        <tr><td>Nazwisko: </td><td><input type="text" name="nazwisko" required></td></tr>
-        <tr><td>Klasa: </td><td><input type="text" name="klasa" required></td></tr>
-        <tr><td>Data urodzin: </td><td><input type="date" name="data_urodzin" required></td></tr>
-        <tr><td>Miejscowosc: </td><td><input type="text" name="miejscowosc" required></td></tr>
-        <tr><td>ulica: </td><td><input type="text" name="ulica" required></td></tr>
-        <tr><td>Telefon: </td><td><input type="text" name="telef" required></td></tr>
-        <tr><td>Mail: </td><td><input type="text" name="mail" required></td></tr>
+        <tr><td>Imię: </td><td><input class="box" type="text" name="imie" required></td></tr>
+        <tr><td>Nazwisko: </td><td><input class="box" type="text" name="nazwisko" required></td></tr>
+        <tr><td>Klasa: </td><td><input class="boxNum" type="number" name="klasa" required></td></tr>
+        <tr><td>Data urodzin: </td><td><input class="box" type="date" name="data_urodzin" required></td></tr>
+        <tr><td>Miejscowosc: </td><td><input class="box" type="text" name="miejscowosc" required></td></tr>
+        <tr><td>ulica: </td><td><input class="box" type="text" name="ulica" required></td></tr>
+        <tr><td>Telefon: </td><td><input class="box" type="text" name="telef" required></td></tr>
+        <tr><td>Mail: </td><td><input class="box" type="text" name="mail" required></td></tr>
         </table>
-        <input class="przyc1" type="submit" value="Dodaj">
-    </form><br>
+        <br>
+        <center><input class="przyc1" type="submit" value="Dodaj"></center>
+</div>
+    </form>
+    </div>
+    <br>
     <a href="<?php echo $deep;?>uczniowie/uczniowie.php"><button class="przyc1">Powrót do listy uczniów</button></a>
     <?php
 
@@ -59,6 +68,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
     }
 }
 ?>
+</div>
 </div>
 </body>
 </html>
