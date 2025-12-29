@@ -37,7 +37,7 @@ include($deep.'db_connect.php');
         $sql = "SELECT uczniowie.id, uczniowie.imie, uczniowie.nazwisko FROM uczniowie WHERE uczniowie.id = $iducz ORDER BY klasa";
          $result = $conn->query($sql); 
          
-         echo '<select name="idu" class="boxSelect" disabled>';
+         echo '<select name="idu" class="boxSelect">';
     while ($row = $result->fetch_assoc())
     {
     
@@ -45,18 +45,18 @@ echo '<option value="'.$row["id"].' " selected>'.$row["imie"].' '.$row['nazwisko
 
     }
     echo '</select></td></tr><tr><td> Przedmiot:</td>';    
-    echo '<td><select name="przedmiot" class="boxSelect" disabled>';
+    echo '<td><select name="przedmiot" class="boxSelect">';
     $sql = "SELECT oceny.przedmiot FROM oceny WHERE oceny.id = $przedmiot;";
     $result = $conn->query($sql);
     while ($row = $result->fetch_assoc())
     {
-        echo '<option value="'.$row["przedmiot"].'">'.$row["przedmiot"].'</option>';
+        echo '<option value="'.$row["przedmiot"].'" selected>'.$row["przedmiot"].'</option>';
     }
     echo '</select>';
          ?>
-        </td></tr><tr><td>
-        Nauczyciel ID:</td><td>
-        <input class="box" type="text" name="nauczyciel_id" value="<?php echo $_SESSION['uzytkownik']; ?>" disabled required></td></tr><tr><td>
+        </td></tr>
+        <input class="box" type="hidden" name="nauczyciel_id" value="<?php echo $_SESSION['uzytkownik']; ?>" required>
+        <tr><td>
         Ocena:</td>
         <td>
         <select class="boxSelect" name="ocena">
