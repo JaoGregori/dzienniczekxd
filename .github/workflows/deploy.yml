@@ -17,4 +17,4 @@ jobs:
           echo "$HOME/.wasmer/bin" >> $GITHUB_PATH
 
       - name: Deploy to Wasmer
-        run: wasmer deploy --wasmer-toml --non-interactive --token=${{ secrets.WASMER_TOKEN }}
+        run: wasmer app deploy --non-interactive --token=${{ secrets.WASMER_TOKEN }}
