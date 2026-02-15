@@ -1,0 +1,17 @@
+[package]
+name = "jaogregori/dzienniczekxd"
+version = "0.1.0"
+description = "Aplikacja PHP na Wasmer"
+
+[[module]]
+source = "php/php"
+name = "php"
+
+[[command]]
+name = "run"
+module = "php"
+runner = "https://webc.org/packages/php/php"
+
+[http_server]
+kind = "cgi"
+module = "php"
