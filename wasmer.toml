@@ -1,17 +1,17 @@
 [package]
-name = "jaogregori/dzienniczekxd"
+name = "jaogregori/dziennik_szkolny"
 version = "0.1.0"
-description = "Aplikacja PHP na Wasmer"
+description = "Moja aplikacja PHP"
 
-[[module]]
-source = "php/php"
-name = "php"
+# Tutaj mówimy Wasmerowi, żeby pobrał gotowy kontener PHP z ich bazy
+[dependencies]
+"php/php" = "8.2"
 
 [[command]]
 name = "run"
-module = "php"
+module = "php/php:php"
 runner = "https://webc.org/packages/php/php"
 
 [http_server]
 kind = "cgi"
-module = "php"
+module = "php/php:php"
