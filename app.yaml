@@ -1,3 +1,6 @@
 kind: wasmer.io/App.v0
-name: jaogregori/dzienniczekxd
-package: .
+name: dzienniczekxd
+owner: jaogregori
+package: sha256:1f3fa85a13aeb0099a9570ae81d94cb7591a35715cc8263c01b842ccc03c8776
+scaling:
+  mode: single_concurrency
