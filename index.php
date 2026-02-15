@@ -22,7 +22,7 @@ if (isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == true) {
 <body>
 <div id="contIndex">
     <div id="cont2Index">
-        <center><h1>Witaj w dzienniku szkolnym</h1></center><br>
+        <center><h1>Witaj w dzienniku szkolnym!</h1></center><br>
         <div id="nl3"><img src="images\nl.png" id="nl" alt="Baba z bachorem uczy go ksiazeczki UwU"/></div>
             <div id="formIndex">
             <form id="form1Index" method="POST" action="zaloguj.php">
@@ -47,4 +47,5 @@ if (isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == true) {
     </div>
 </div>  
 </body>
+
 </html>
