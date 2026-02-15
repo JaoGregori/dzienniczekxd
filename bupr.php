@@ -10,9 +10,10 @@
 <body>
     <div id="bupr">
         <h1>Brak uprawnień</h1><br>
-        <p>Nie masz uprawnień do tej strony.</p><br>
+        <p>Nie masz uprawnień do przeglądania tej strony.</p><br>
         <a href="<?php echo $deep;?>index.php"><button class="minwyb">Powrót do strony głównej</button></a><br>
     </div>
 
 </body>
+
 </html>
